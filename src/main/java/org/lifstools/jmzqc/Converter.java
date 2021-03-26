@@ -15,7 +15,6 @@
  */
 package org.lifstools.jmzqc;
 
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.core.JsonFactoryBuilder;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.*;
@@ -23,9 +22,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import java.util.*;
-import java.time.LocalDate;
+import java.io.File;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
@@ -65,6 +67,22 @@ public class Converter {
     }
     // Serialize/deserialize helpers
 
+    public static Coordinate fromFile(File file) throws IOException {
+        return fromJsonString(Files.readString(file.toPath(), StandardCharsets.UTF_8));
+    }
+
+    public static Coordinate fromUrl(URL url) throws IOException {
+        try (InputStream in = url.openStream()) {
+            byte[] bytes = in.readAllBytes();
+            return fromJsonString(new String(bytes, StandardCharsets.UTF_8));
+        }
+    }
+
+    public static Coordinate fromUrlString(String urlString) throws MalformedURLException, IOException {
+        URL url = new URL(urlString);
+        return fromUrl(url);
+    }
+
     public static Coordinate fromJsonString(String json) throws IOException {
         return getObjectReader().readValue(json);
     }
@@ -97,12 +115,16 @@ public class Converter {
     }
 
     private static ObjectReader getObjectReader() {
-        if (reader == null) instantiateMapper();
+        if (reader == null) {
+            instantiateMapper();
+        }
         return reader;
     }
 
     private static ObjectWriter getObjectWriter() {
-        if (writer == null) instantiateMapper();
+        if (writer == null) {
+            instantiateMapper();
+        }
         return writer;
     }
 }

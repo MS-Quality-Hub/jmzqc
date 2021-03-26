@@ -34,16 +34,23 @@ public class MzQCTest {
         assertEquals(226, c.getMzQC().getRunQualities().size());
         assertEquals(2, c.getMzQC().getControlledVocabularies().size());
     }
-    
+
     @Test
     public void testReadQC2SampleExample() throws IOException {
+        String url = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/master/doc/examples/QC2-sample-example.mzQC";
+        Coordinate d = Converter.fromUrlString(url);
+        assertNotNull(d);
+        assertEquals(1, d.getMzQC().getRunQualities().size());
+        assertEquals(0, d.getMzQC().getSetQualities().size());
+        assertEquals(2, d.getMzQC().getControlledVocabularies().size());
+
         Coordinate c = Converter.fromJsonString(new String(getClass().getClassLoader().getResourceAsStream("examples/QC2-sample-example.mzQC").readAllBytes(), StandardCharsets.UTF_8));
         assertNotNull(c);
         assertEquals(1, c.getMzQC().getRunQualities().size());
         assertEquals(0, c.getMzQC().getSetQualities().size());
         assertEquals(2, c.getMzQC().getControlledVocabularies().size());
     }
-    
+
     @Test
     public void testReadMultiRunExample() throws IOException {
         Coordinate c = Converter.fromJsonString(new String(getClass().getClassLoader().getResourceAsStream("examples/multi-run.mzQC").readAllBytes(), StandardCharsets.UTF_8));
@@ -52,7 +59,7 @@ public class MzQCTest {
         assertEquals(1, c.getMzQC().getSetQualities().size());
         assertEquals(2, c.getMzQC().getControlledVocabularies().size());
     }
-    
+
     @Test
     public void testReadSingleRunExample() throws IOException {
         Coordinate c = Converter.fromJsonString(new String(getClass().getClassLoader().getResourceAsStream("examples/single-run.mzQC").readAllBytes(), StandardCharsets.UTF_8));

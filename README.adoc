@@ -58,7 +58,25 @@ as defined in the properties section of your pom file.
 
 == Using the API programmatically
 
-TBD
+=== Reading MzQC JSON into the object model
+
+To parse a JSON string directly:
+
+  Coordinate c = Converter.fromJsonString(....);
+
+Alternatively, to read the content from a file:
+
+  Coordinate c = Converter.fromFile(new File("path/to/file.mzQC"));
+
+Or, to read from a URL:
+
+  Coordinate c = Converter.fromUrl(new Url("https://raw.githubusercontent.com/HUPO-PSI/mzQC/master/doc/examples/QC2-sample-example.mzQC"));
+  
+You can then access the MzQC object:
+
+  MzQC mzQc = c.getMzQC();
+
+Write support coming soon!
 
 == References
 

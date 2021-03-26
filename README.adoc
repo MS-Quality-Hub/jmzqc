@@ -1,0 +1,82 @@
+= jmzqc Parser, Writer and Validator for the HUPO-PSI MzQC format
+Nils Hoffmann <nils.hoffmann@cebitec.uni-bielefeld.de>
+:toc: macro
+
+//image::https://api.bintray.com/packages/lifs/maven/jgoslin-cli/images/download.svg[link="https://bintray.com/lifs/maven/jgoslin-cli/_latestVersion"] 
+image:https://img.shields.io/github/release/lifs-tools/jgoslin.svg["Latest Release", link="https://github.com/lifs-tools/jmzqc/releases/latest"] 
+//image:https://zenodo.org/badge/DOI/10.5281/zenodo.3826474.svg["DOI", link="https://doi.org/10.5281/zenodo.3826474"]
+//image:https://travis-ci.org/lifs-tools/jgoslin.svg?branch=master["Build Status", link="https://travis-ci.org/lifs-tools/jgoslin"]
+
+//This project is a parser, validator and normalizer implementation for shorthand lipid nomenclatures, base on the https://github.com/lifs-tools/goslin[Grammar of Succinct Lipid Nomenclatures project].
+
+//Goslin defines multiple grammers compatible with https://www.antlr.org/[ANTLRv4] for different sources of shorthand lipid nomenclature. This allows to generate parsers based on the defined grammars,
+//which provide immediate feedback whether a processed lipid shorthand notation string is compliant with a particular grammar, or not.
+
+//jGoslin uses the Goslin grammars and the generated parser to support the following general tasks:
+
+//. Facilitate the parsing of shorthand lipid names dialects.
+//. Provide a structural representation of the shorthand lipid after parsing.
+//. Use the structural representation to generate normalized names.
+
+//The Maven site with JavaDoc is available https://lifs-tools.github.io/jmzqc/index.html[here].
+
+== Related Projects
+
+- https://github.com/HUPO-PSI/mzqc[The official HUPO-PSI mzQC project]
+
+== Table of contents
+toc::[]
+
+== Building the project and generating client code from the command-line
+
+In order to build the client code and run the unit tests, execute the following command from a terminal:
+
+	./mvnw install
+
+This generates the necessary domain specific code for Java. 
+
+== Using the project code releases via GitHub Packages
+
+The library release artifacts are available from Github packages.
+If you want to use them, add the following lines to your own Maven pom file :
+
+  <profile>
+    <id>lifs-repos</id>
+    <repositories>
+     <repository>
+         <snapshots>
+             <enabled>false</enabled>
+         </snapshots>
+         <id>bintray-lifs</id>
+         <name>bintray-lifs</name>
+         <url>https://dl.bintray.com/lifs/maven</url>
+     </repository>
+    </repositories>
+  </profile>
+
+To use the parser libraries (reading and validation) in your own Maven projects, use the following dependency:
+
+  <dependency>
+    <groupId>org.lifstools</groupId>
+    <artifactId>jmzqc</artifactId>
+    <version>${jmzqc.version}</version>
+  </dependency>
+
+where `jmzqc.version` is the version of jmzqc you wish to use, e.g. for a release version:
+
+  <properties>
+    <jmzqc.version>1.0.0</jmzqc.version>
+  </properties>
+
+as defined in the properties section of your pom file.
+
+== Using the API programmatically
+
+TBD
+
+== References
+
+//  * **https://pubs.acs.org/doi/10.1021/acs.analchem.8b04310[N. Hoffmann et al., Analytical Chemistry 2019; Jan;91(5):3302-3310.] https://pubs.acs.org/doi/pdf/10.1021/acs.analchem.8b04310[PDF File.] https://www.ncbi.nlm.nih.gov/pubmed/30688441[PubMed record].**
+
+//* https://doi.org/10.1101/2020.04.17.046656[D. Kopczynski et al., Biorxiv, April 20th, 2020]
+

@@ -38,22 +38,7 @@ This generates the necessary domain specific code for Java.
 
 == Using the project code releases via GitHub Packages
 
-The library release artifacts are available from Github packages.
-If you want to use them, add the following lines to your own Maven pom file :
-
-  <profile>
-    <id>lifs-repos</id>
-    <repositories>
-     <repository>
-         <snapshots>
-             <enabled>false</enabled>
-         </snapshots>
-         <id>bintray-lifs</id>
-         <name>bintray-lifs</name>
-         <url>https://dl.bintray.com/lifs/maven</url>
-     </repository>
-    </repositories>
-  </profile>
+Note: The library is currently not yet available from Github packages. Please check back later!
 
 To use the parser libraries (reading and validation) in your own Maven projects, use the following dependency:
 

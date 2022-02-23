@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
@@ -89,6 +90,10 @@ public class Converter {
 
     public static String toJsonString(Coordinate obj) throws JsonProcessingException {
         return getObjectWriter().writeValueAsString(obj);
+    }
+
+    public static File toJsonFile(Coordinate obj, File file) throws JsonProcessingException, IOException {
+        return Files.writeString(file.toPath(), toJsonString(obj), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING).toFile();
     }
 
     private static ObjectReader reader;

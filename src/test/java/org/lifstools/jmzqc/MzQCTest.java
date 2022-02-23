@@ -15,8 +15,8 @@
  */
 package org.lifstools.jmzqc;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  */
 public class MzQCTest {
 
-    private String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/master/doc/examples/";
+    private final String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/master/doc/examples/";
 
     @Test
     public void testReadMetaboBatchesExample() throws IOException {
@@ -47,6 +47,21 @@ public class MzQCTest {
     }
 
     @Test
+    public void testWriteQC2SampleExample() throws IOException {
+        Coordinate d = Converter.fromUrlString(baseUrl + "QC2-sample-example.mzQC");
+        assertNotNull(d);
+        assertEquals(1, d.getMzQC().getRunQualities().size());
+        assertEquals(0, d.getMzQC().getSetQualities().size());
+        assertEquals(2, d.getMzQC().getControlledVocabularies().size());
+        File testFile = File.createTempFile("QC2-sample-example", ".mzQC");
+        File writtenFile = Converter.toJsonFile(d, testFile);
+        Coordinate e = Converter.fromFile(writtenFile);
+        assertEquals(d.getMzQC().getRunQualities().size(), e.getMzQC().getRunQualities().size());
+        assertEquals(d.getMzQC().getSetQualities().size(), e.getMzQC().getSetQualities().size());
+        assertEquals(d.getMzQC().getControlledVocabularies().size(), e.getMzQC().getControlledVocabularies().size());
+    }
+
+    @Test
     public void testReadMultiRunExample() throws IOException {
         Coordinate c = Converter.fromUrlString(baseUrl + "set-of-runs.mzQC");
         assertNotNull(c);
@@ -62,8 +77,8 @@ public class MzQCTest {
         assertEquals(1, c.getMzQC().getRunQualities().size());
         assertEquals(2, c.getMzQC().getControlledVocabularies().size());
     }
-    
-        @Test
+
+    @Test
     public void testMtb120Example() throws IOException {
         Coordinate c = Converter.fromUrlString(baseUrl + "Mtb-120-outlier-metrics.mzqc");
         assertNotNull(c);

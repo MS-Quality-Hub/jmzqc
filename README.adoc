@@ -76,7 +76,9 @@ You can then access the MzQC object:
 
   MzQC mzQc = c.getMzQC();
 
-Write support coming soon!
+In order to write an MzQC object:
+
+  Converter.toFile(mzQc, new File("path/to/write/file.mzQC"));
 
 == References
 

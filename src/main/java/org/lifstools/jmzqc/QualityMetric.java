@@ -43,4 +43,28 @@ public class QualityMetric {
     @lombok.Getter(onMethod_ = {@JsonProperty("unit")})
     @lombok.Setter(onMethod_ = {@JsonProperty("unit")})
     private Unit unit;
+    
+    @JsonIgnore
+    public Long toLong() {
+        if(value instanceof Number number) {
+            return number.longValue();
+        }
+        throw new ClassCastException(value.getClass().getName()+" cannot be cast to "+ Number.class.getName());
+    }
+    
+    @JsonIgnore
+    public Double toDouble() {
+        if(value instanceof Number number) {
+            return number.doubleValue();
+        }
+        throw new ClassCastException(value.getClass().getName()+" cannot be cast to "+ Number.class.getName());
+    }
+    
+    @JsonIgnore
+    public Integer toInteger() {
+        if(value instanceof Number number) {
+            return number.intValue();
+        }
+        throw new ClassCastException(value.getClass().getName()+" cannot be cast to "+ Number.class.getName());
+    }
 }

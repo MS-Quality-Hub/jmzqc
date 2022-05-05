@@ -1,5 +1,5 @@
-/* 
- * Copyright 2021 Nils Hoffmann.
+/*
+ * Copyright 2022 Nils Hoffmann.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.lifstools.jmzqc.cv;
+
+import java.util.List;
+import org.lifstools.jmzqc.CvParameter;
+
 /**
- * Base package for MzQC Java implementation. Please check the {@link Converter}
- * class for methods to read and write MzQC. The MzQC base object is wrapped in
- * a generic {@link Coordinate} object. 
- * 
- * Object bindings were generated using <a href="https://app.quicktype.io">Quicktype</a>.
  *
- * @see Converter
- * @see Coordinate
- * @see MzQC
+ * @author Nils Hoffmann
  */
-package org.lifstools.jmzqc;
+public class TableColumn<T> {
+    private CvParameter unit;
+    private CvParameter type;
+    private List<T> values;
+}

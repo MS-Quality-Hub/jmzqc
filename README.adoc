@@ -2,8 +2,7 @@
 Nils Hoffmann <nils.hoffmann@cebitec.uni-bielefeld.de>
 :toc: macro
 
-image:https://img.shields.io/badge/lifecycle-experimental-orange.svg["Lifecycle: Experimental, link="https://github.com/lifs-tools/jmqzc"]
-//image:https://api.bintray.com/packages/lifs/maven/jgoslin-cli/images/download.svg[link="https://bintray.com/lifs/maven/jgoslin-cli/_latestVersion"] 
+image:https://img.shields.io/badge/lifecycle-experimental-orange.svg["Lifecycle: Experimental", link="https://github.com/lifs-tools/jmqzc"] image:https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg["CI", link="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml")
 //image:https://img.shields.io/github/release/lifs-tools/jgoslin.svg["Latest Release", link="https://github.com/lifs-tools/jmzqc/releases/latest"] 
 //image:https://zenodo.org/badge/DOI/10.5281/zenodo.3826474.svg["DOI", link="https://doi.org/10.5281/zenodo.3826474"]
 //image:https://travis-ci.org/lifs-tools/jgoslin.svg?branch=master["Build Status", link="https://travis-ci.org/lifs-tools/jgoslin"]

@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class MzQCTest {
 
-    private final String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/doc/examples/";
+    private final String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/";
 
     @Test
     public void testReadMetaboBatchesExample() throws IOException {

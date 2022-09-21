@@ -25,3 +25,6 @@ jobs:
           env:
             DEFAULT_BRANCH: master
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Publish Test Report
+          if: ${{ always() }}
+          uses: scacap/action-surefire-report@v1

@@ -15,24 +15,93 @@
  */
 package org.lifstools.jmzqc;
 
-import com.fasterxml.jackson.annotation.*;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Input file used to generate the QC metrics.
  */
-@lombok.Data
 public class InputFile {
-    @lombok.Getter(onMethod_ = {@JsonProperty("fileFormat")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("fileFormat")})
+
     private CvParameter fileFormat;
-    @lombok.Getter(onMethod_ = {@JsonProperty("fileProperties")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("fileProperties")})
     private List<CvParameter> fileProperties;
-    @lombok.Getter(onMethod_ = {@JsonProperty("location")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("location")})
     private String location;
-    @lombok.Getter(onMethod_ = {@JsonProperty("name")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("name")})
     private String name;
+
+    public InputFile() {
+    }
+
+    public InputFile(CvParameter fileFormat, List<CvParameter> fileProperties, String location, String name) {
+        this.fileFormat = fileFormat;
+        this.fileProperties = fileProperties;
+        this.location = location;
+        this.name = name;
+    }
+
+    public CvParameter getFileFormat() {
+        return fileFormat;
+    }
+
+    public void setFileFormat(CvParameter fileFormat) {
+        this.fileFormat = fileFormat;
+    }
+
+    public List<CvParameter> getFileProperties() {
+        return fileProperties;
+    }
+
+    public void setFileProperties(List<CvParameter> fileProperties) {
+        this.fileProperties = fileProperties;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.fileFormat);
+        hash = 83 * hash + Objects.hashCode(this.fileProperties);
+        hash = 83 * hash + Objects.hashCode(this.location);
+        hash = 83 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final InputFile other = (InputFile) obj;
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.fileFormat, other.fileFormat)) {
+            return false;
+        }
+        return Objects.equals(this.fileProperties, other.fileProperties);
+    }
+
 }

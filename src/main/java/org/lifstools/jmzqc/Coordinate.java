@@ -15,15 +15,50 @@
  */
 package org.lifstools.jmzqc;
 
-import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
 
 /**
  * JSON schema specifying the mzQC format v1.0.0 developed by the HUPO-PSI Quality Control
  * working group (http://psidev.info/groups/quality-control).
  */
-@lombok.Data
+
 public class Coordinate {
-    @lombok.Getter(onMethod_ = {@JsonProperty("mzQC")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("mzQC")})
+
     private MzQC mzQC;
+    
+    public Coordinate() {}
+    
+    public Coordinate(MzQC mzQC) {
+        this.mzQC = mzQC;
+    }
+
+    public MzQC getMzQC() {
+        return mzQC;
+    }
+
+    public void setMzQC(MzQC mzQC) {
+        this.mzQC = mzQC;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.mzQC);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Coordinate other = (Coordinate) obj;
+        return Objects.equals(this.mzQC, other.mzQC);
+    }
 }

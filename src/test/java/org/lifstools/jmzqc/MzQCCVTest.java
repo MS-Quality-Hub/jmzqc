@@ -24,7 +24,6 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.extern.slf4j.Slf4j;
 import org.biojava.nbio.ontology.Ontology;
 import org.biojava.nbio.ontology.OntologyFactory;
 import org.biojava.nbio.ontology.io.OboParser;
@@ -37,7 +36,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author Nils Hoffmann
  */
-@Slf4j
 public class MzQCCVTest {
 
     @Test
@@ -51,11 +49,11 @@ public class MzQCCVTest {
                     assertTrue(ontology.containsTerm("MS:4000000"));
                     assertFalse(ontology.containsTerm("MS:2000000"));
                 } catch (ParseException ex) {
-                    log.error("Parsing exception: {}", ex);
+                    System.err.println("Parsing exception: " + ex.getLocalizedMessage());
                 }
             }
-            
+
         }
-        
+
     }
 }

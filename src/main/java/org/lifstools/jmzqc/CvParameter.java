@@ -15,25 +15,94 @@
  */
 package org.lifstools.jmzqc;
 
-import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
 
 /**
- * Base element for a term that is defined in a controlled vocabulary, with OPTIONAL value.
+ * Base element for a term that is defined in a controlled vocabulary, with
+ * OPTIONAL value.
  *
  * Type of input file.
  */
-@lombok.Data
 public class CvParameter {
-    @lombok.Getter(onMethod_ = {@JsonProperty("accession")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("accession")})
+
     private String accession;
-    @lombok.Getter(onMethod_ = {@JsonProperty("description")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("description")})
     private String description;
-    @lombok.Getter(onMethod_ = {@JsonProperty("name")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("name")})
     private String name;
-    @lombok.Getter(onMethod_ = {@JsonProperty("value")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("value")})
     private Object value;
+
+    public CvParameter(){}
+    
+    public CvParameter(String accession, String description, String name, Object value) {
+        this.accession = accession;
+        this.description = description;
+        this.name = name;
+        this.value = value;
+    }
+
+    public String getAccession() {
+        return accession;
+    }
+
+    public void setAccession(String accession) {
+        this.accession = accession;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.accession);
+        hash = 19 * hash + Objects.hashCode(this.description);
+        hash = 19 * hash + Objects.hashCode(this.name);
+        hash = 19 * hash + Objects.hashCode(this.value);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CvParameter other = (CvParameter) obj;
+        if (!Objects.equals(this.accession, other.accession)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return Objects.equals(this.value, other.value);
+    }
+
 }

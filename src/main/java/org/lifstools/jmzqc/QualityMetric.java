@@ -16,55 +16,135 @@
 package org.lifstools.jmzqc;
 
 import com.fasterxml.jackson.annotation.*;
-import java.util.List;
+import java.util.Objects;
 
 /**
- * Element containing the value and description of a QC metric defined in a controlled
- * vocabulary.
+ * Element containing the value and description of a QC metric defined in a
+ * controlled vocabulary.
  *
- * Base element for a term that is defined in a controlled vocabulary, with OPTIONAL value.
+ * Base element for a term that is defined in a controlled vocabulary, with
+ * OPTIONAL value.
  *
  * Type of input file.
  */
-@lombok.Data
 public class QualityMetric {
-    @lombok.Getter(onMethod_ = {@JsonProperty("accession")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("accession")})
+
     private String accession;
-    @lombok.Getter(onMethod_ = {@JsonProperty("description")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("description")})
     private String description;
-    @lombok.Getter(onMethod_ = {@JsonProperty("name")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("name")})
     private String name;
-    @lombok.Getter(onMethod_ = {@JsonProperty("value")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("value")})
     private Object value;
-    @lombok.Getter(onMethod_ = {@JsonProperty("unit")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("unit")})
     private Unit unit;
-    
+
+    public QualityMetric() {
+    }
+
+    public QualityMetric(String accession, String description, String name, Object value, Unit unit) {
+        this.accession = accession;
+        this.description = description;
+        this.name = name;
+        this.value = value;
+        this.unit = unit;
+    }
+
+    public String getAccession() {
+        return accession;
+    }
+
+    public void setAccession(String accession) {
+        this.accession = accession;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.accession);
+        hash = 37 * hash + Objects.hashCode(this.description);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.value);
+        hash = 37 * hash + Objects.hashCode(this.unit);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final QualityMetric other = (QualityMetric) obj;
+        if (!Objects.equals(this.accession, other.accession)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.value, other.value)) {
+            return false;
+        }
+        return Objects.equals(this.unit, other.unit);
+    }
+
     @JsonIgnore
     public Long toLong() {
-        if(value instanceof Number number) {
+        if (value instanceof Number number) {
             return number.longValue();
         }
-        throw new ClassCastException(value.getClass().getName()+" cannot be cast to "+ Number.class.getName());
+        throw new ClassCastException(value.getClass().getName() + " cannot be cast to " + Number.class.getName());
     }
-    
+
     @JsonIgnore
     public Double toDouble() {
-        if(value instanceof Number number) {
+        if (value instanceof Number number) {
             return number.doubleValue();
         }
-        throw new ClassCastException(value.getClass().getName()+" cannot be cast to "+ Number.class.getName());
+        throw new ClassCastException(value.getClass().getName() + " cannot be cast to " + Number.class.getName());
     }
-    
+
     @JsonIgnore
     public Integer toInteger() {
-        if(value instanceof Number number) {
+        if (value instanceof Number number) {
             return number.intValue();
         }
-        throw new ClassCastException(value.getClass().getName()+" cannot be cast to "+ Number.class.getName());
+        throw new ClassCastException(value.getClass().getName() + " cannot be cast to " + Number.class.getName());
     }
 }

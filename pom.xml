@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.lifs-tools</groupId>
     <artifactId>jmzqc</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RC1</version>
     <packaging>jar</packaging>
     <description>jmzQC is the Java reference implementation to read, create, validate and write the mzQC format.</description>
     <url>https://github.com/MS-Quality-hub/jmzqc</url>

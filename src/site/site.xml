@@ -1,0 +1,28 @@
+<project name="jmzqc Reference">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.11.1</version>
+    </skin>
+    <custom>
+        <fluidoSkin>
+            <gitHub>
+                <projectId>MS-Quality-hub/jmzqc</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>black</ribbonColor>
+            </gitHub>
+        </fluidoSkin>
+    </custom>
+    <body>
+        <links>
+            <item name="JmzQC" href="https://github.com/MS-Quality-hub/jmzqc"/>
+            <item name="MS-Quality Hub" href="https://github.com/MS-Quality-hub"/>
+            <item name="mzQC" href="https://github.com/HUPO-PSI/mzQC"/>
+        </links>
+        <menu ref="reports" />
+        <menu name="Project JavaDocs">
+            <item name="Overview" href="apidocs/index.html"/>
+        </menu>
+        <menu ref="parent" />
+    </body>
+</project>

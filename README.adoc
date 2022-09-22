@@ -5,20 +5,10 @@ Nils Hoffmann <nils.hoffmann@cebitec.uni-bielefeld.de>
 image:https://img.shields.io/badge/lifecycle-experimental-orange.svg["Lifecycle: Experimental", link="https://github.com/lifs-tools/jmqzc"] image:https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg["CI", link="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"]
 //image:https://img.shields.io/github/release/lifs-tools/jgoslin.svg["Latest Release", link="https://github.com/lifs-tools/jmzqc/releases/latest"] 
 //image:https://zenodo.org/badge/DOI/10.5281/zenodo.3826474.svg["DOI", link="https://doi.org/10.5281/zenodo.3826474"]
-//image:https://travis-ci.org/lifs-tools/jgoslin.svg?branch=master["Build Status", link="https://travis-ci.org/lifs-tools/jgoslin"]
 
-//This project is a parser, validator and normalizer implementation for shorthand lipid nomenclatures, base on the https://github.com/lifs-tools/goslin[Grammar of Succinct Lipid Nomenclatures project].
+This project is a parser, validator and serializer implementation for https://github.com/HUPO-PSI/mzQC[mzQC: Reporting and exchange format for mass spectrometry quality control data].
 
-//Goslin defines multiple grammers compatible with https://www.antlr.org/[ANTLRv4] for different sources of shorthand lipid nomenclature. This allows to generate parsers based on the defined grammars,
-//which provide immediate feedback whether a processed lipid shorthand notation string is compliant with a particular grammar, or not.
-
-//jGoslin uses the Goslin grammars and the generated parser to support the following general tasks:
-
-//. Facilitate the parsing of shorthand lipid names dialects.
-//. Provide a structural representation of the shorthand lipid after parsing.
-//. Use the structural representation to generate normalized names.
-
-//The Maven site with JavaDoc is available https://lifs-tools.github.io/jmzqc/index.html[here].
+The Maven site with JavaDoc is available https://MS-Quality-hub.github.io/jmzqc/index.html[here].
 
 == Related Projects
 
@@ -31,18 +21,18 @@ toc::[]
 
 In order to build the client code and run the unit tests, execute the following command from a terminal:
 
-	./mvnw install
+    ./mvnw install
 
 This generates the necessary domain specific code for Java. 
 
-== Using the project code releases via GitHub Packages
+== Using the project code releases via Maven Central
 
-Note: The library is currently not yet available from Github packages. Please check back later!
+Note: The library will be made available via Maven Central. To search for releases, go to https://search.maven.org/search?q=org.lifs-tools
 
 To use the parser libraries (reading and validation) in your own Maven projects, use the following dependency:
 
   <dependency>
-    <groupId>org.lifstools</groupId>
+    <groupId>org.lifs-tools</groupId>
     <artifactId>jmzqc</artifactId>
     <version>${jmzqc.version}</version>
   </dependency>

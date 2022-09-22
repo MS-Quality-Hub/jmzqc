@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * One or more controlled vocabulary elements describing the unit of the metric.
@@ -29,10 +30,62 @@ import java.util.List;
 @JsonDeserialize(using = Unit.Deserializer.class)
 @JsonSerialize(using = Unit.Serializer.class)
 public class Unit {
+
     public CvParameter cvParameterValue;
-    public List<CvParameter> cvParameterArrayValue = Collections.emptyList();
+    public List<CvParameter> cvParameterArrayValue;// = Collections.emptyList();
+
+    public Unit() {
+    }
+
+    public Unit(CvParameter cvParameterValue, List<CvParameter> cvParameterArrayValue) {
+        this.cvParameterValue = cvParameterValue;
+        this.cvParameterArrayValue = cvParameterArrayValue;
+    }
+
+    public CvParameter getCvParameterValue() {
+        return cvParameterValue;
+    }
+
+    public void setCvParameterValue(CvParameter cvParameterValue) {
+        this.cvParameterValue = cvParameterValue;
+    }
+
+    public List<CvParameter> getCvParameterArrayValue() {
+        return cvParameterArrayValue;
+    }
+
+    public void setCvParameterArrayValue(List<CvParameter> cvParameterArrayValue) {
+        this.cvParameterArrayValue = cvParameterArrayValue;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.cvParameterValue);
+        hash = 71 * hash + Objects.hashCode(this.cvParameterArrayValue);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Unit other = (Unit) obj;
+        if (!Objects.equals(this.cvParameterValue, other.cvParameterValue)) {
+            return false;
+        }
+        return Objects.equals(this.cvParameterArrayValue, other.cvParameterArrayValue);
+    }
 
     static class Deserializer extends JsonDeserializer<Unit> {
+
         @Override
         public Unit deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
             Unit value = new Unit();
@@ -40,18 +93,21 @@ public class Unit {
                 case VALUE_NULL:
                     break;
                 case START_ARRAY:
-                    value.cvParameterArrayValue = jsonParser.readValueAs(new TypeReference<List<CvParameter>>() {});
+                    value.cvParameterArrayValue = jsonParser.readValueAs(new TypeReference<List<CvParameter>>() {
+                    });
                     break;
                 case START_OBJECT:
                     value.cvParameterValue = jsonParser.readValueAs(CvParameter.class);
                     break;
-                default: throw new IOException("Cannot deserialize Unit");
+                default:
+                    throw new IOException("Cannot deserialize Unit");
             }
             return value;
         }
     }
 
     static class Serializer extends JsonSerializer<Unit> {
+
         @Override
         public void serialize(Unit obj, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
             if (obj.cvParameterValue != null) {

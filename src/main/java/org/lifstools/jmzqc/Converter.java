@@ -37,6 +37,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
+/**
+ * Provides convenience functions to parse date and time strings and to
+ * serialize and deserialize mzQC from and to a variety of sources.
+ */
 public class Converter {
     // Date-time helpers
 
@@ -50,6 +54,11 @@ public class Converter {
             .toFormatter()
             .withZone(ZoneOffset.UTC);
 
+    /**
+     * Parse a date and time string using the default date and time formatter.
+     * @param str the date time string
+     * @return an {@link OffsetDateTime} object.
+     */
     public static OffsetDateTime parseDateTimeString(String str) {
         return ZonedDateTime.from(Converter.DATE_TIME_FORMATTER.parse(str)).toOffsetDateTime();
     }
@@ -63,35 +72,86 @@ public class Converter {
             .toFormatter()
             .withZone(ZoneOffset.UTC);
 
+    /**
+     * Parse a time string using the default time formatter.
+     *
+     * @param str the time string
+     * @return an {@link OffsetTime} object.
+     */
     public static OffsetTime parseTimeString(String str) {
         return ZonedDateTime.from(Converter.TIME_FORMATTER.parse(str)).toOffsetDateTime().toOffsetTime();
     }
     // Serialize/deserialize helpers
 
+    /**
+     * Return a Coordinate holding an MzQC object from a file.
+     *
+     * @param file the file containing the mzQC json data.
+     * @return {@link Coordinate} holding the MzQC object.
+     * @throws IOException
+     */
     public static Coordinate fromFile(File file) throws IOException {
         return fromJsonString(Files.readString(file.toPath(), StandardCharsets.UTF_8));
     }
 
+    /**
+     * Return a Coordinate holding an MzQC object from a URL.
+     *
+     * @param url the url from where to load the mzQC json data.
+     * @return {@link Coordinate} holding the MzQC object.
+     * @throws IOException
+     */
     public static Coordinate fromUrl(URL url) throws IOException {
-        try (InputStream in = url.openStream()) {
+        try ( InputStream in = url.openStream()) {
             byte[] bytes = in.readAllBytes();
             return fromJsonString(new String(bytes, StandardCharsets.UTF_8));
         }
     }
 
+    /**
+     * Return a Coordinate holding an MzQC object from a URL string.
+     *
+     * @param urlString the urlString from where to load the mzQC json data.
+     * @return {@link Coordinate} holding the MzQC object.
+     * @throws IOException
+     */
     public static Coordinate fromUrlString(String urlString) throws MalformedURLException, IOException {
         URL url = new URL(urlString);
         return fromUrl(url);
     }
 
+    /**
+     * Return a Coordinate holding an MzQC object from a string holding the JSON
+     * representation of an mzQC data.
+     *
+     * @param json the string containing the mzQC json data.
+     * @return {@link Coordinate} holding the MzQC object.
+     * @throws IOException
+     */
     public static Coordinate fromJsonString(String json) throws IOException {
         return getObjectReader().readValue(json);
     }
 
+    /**
+     * Serialize the Coordinate holding an MzQC object to a JSON string.
+     *
+     * @param obj the coordinate
+     * @return an (unformatted) JSON string representation.
+     * @throws JsonProcessingException
+     */
     public static String toJsonString(Coordinate obj) throws JsonProcessingException {
         return getObjectWriter().writeValueAsString(obj);
     }
 
+    /**
+     * Serialize the Coordinate holding an MzQC object to a file containing the
+     * data as a JSON string.
+     *
+     * @param obj the coordinate
+     * @param file the file to write to
+     * @return an (unformatted) JSON string representation.
+     * @throws JsonProcessingException
+     */
     public static File toJsonFile(Coordinate obj, File file) throws JsonProcessingException, IOException {
         return Files.writeString(file.toPath(), toJsonString(obj), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING).toFile();
     }

@@ -99,7 +99,7 @@ Or from a URL:
 
 Or immediately from an MzQC object:
 
-  Set<ValidationMessage> messages = Converter.validate(mzqc));
+  Set<ValidationMessage> messages = Converter.validate(mzqc);
   
 The returned messages will be empty, if validation was successful. Otherwise, the messages will contain information on what was wrong and where in your mzQC document the issue was detected.
 

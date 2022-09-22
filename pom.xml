@@ -5,6 +5,7 @@
     <artifactId>jmzqc</artifactId>
     <version>1.0.0-RC1</version>
     <packaging>jar</packaging>
+    <name>jmzQC</name>
     <description>jmzQC is the Java reference implementation to read, create, validate and write the mzQC format.</description>
     <url>https://github.com/MS-Quality-hub/jmzqc</url>
     <organization>

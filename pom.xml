@@ -116,7 +116,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
         <java.version>17</java.version>
-        <github.global.server>github</github.global.server>
+        <github.global.server>github-site</github.global.server>
     </properties>
     <build>
         <pluginManagement>

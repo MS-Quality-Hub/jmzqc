@@ -99,7 +99,7 @@ public class Converter {
      * @return {@link Coordinate} holding the MzQC object.
      * @throws IOException
      */
-    public static Coordinate of(File file) throws IOException {
+    public static MzQC of(File file) throws IOException {
         return of(Files.readString(file.toPath(), StandardCharsets.UTF_8));
     }
 
@@ -110,7 +110,7 @@ public class Converter {
      * @return {@link Coordinate} holding the MzQC object.
      * @throws IOException
      */
-    public static Coordinate of(URL url) throws IOException {
+    public static MzQC of(URL url) throws IOException {
         try ( InputStream in = url.openStream()) {
             byte[] bytes = in.readAllBytes();
             return of(new String(bytes, StandardCharsets.UTF_8));
@@ -125,8 +125,8 @@ public class Converter {
      * @return {@link Coordinate} holding the MzQC object.
      * @throws IOException
      */
-    public static Coordinate of(String json) throws IOException {
-        return getObjectReader().readValue(json);
+    public static MzQC of(String json) throws IOException {
+        return ((Coordinate) getObjectReader().readValue(json)).getMzQC();
     }
 
     /**
@@ -138,6 +138,17 @@ public class Converter {
      */
     public static Set<ValidationMessage> validate(String json) throws JsonProcessingException {
         return defaultSchema().validate(getObjectReader().readTree(json));
+    }
+
+    /**
+     * Validate a mzQC Object.
+     *
+     * @param mzQc the mzQC object.
+     * @return a set of validation messages.
+     * @throws JsonProcessingException if the JSON is malformed.
+     */
+    public static Set<ValidationMessage> validate(MzQC mzQc) throws JsonProcessingException {
+        return defaultSchema().validate(getObjectReader().readTree(Converter.toJsonString(mzQc)));
     }
 
     /**
@@ -165,26 +176,25 @@ public class Converter {
     }
 
     /**
-     * Serialize the Coordinate holding an MzQC object to a JSON string.
+     * Serialize the MzQC object to a JSON string.
      *
-     * @param obj the coordinate
+     * @param obj the MzQC object
      * @return an (unformatted) JSON string representation.
      * @throws JsonProcessingException
      */
-    public static String toJsonString(Coordinate obj) throws JsonProcessingException {
-        return getObjectWriter().writeValueAsString(obj);
+    public static String toJsonString(MzQC obj) throws JsonProcessingException {
+        return getObjectWriter().writeValueAsString(new Coordinate(obj));
     }
 
     /**
-     * Serialize the Coordinate holding an MzQC object to a file containing the
-     * data as a JSON string.
+     * Serialize the MzQC object to a file containing the data as a JSON string.
      *
-     * @param obj the coordinate
+     * @param obj the MzQC object
      * @param file the file to write to
      * @return an (unformatted) JSON string representation.
      * @throws JsonProcessingException
      */
-    public static File toJsonFile(Coordinate obj, File file) throws JsonProcessingException, IOException {
+    public static File toJsonFile(MzQC obj, File file) throws JsonProcessingException, IOException {
         return Files.writeString(file.toPath(), toJsonString(obj), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING).toFile();
     }
 

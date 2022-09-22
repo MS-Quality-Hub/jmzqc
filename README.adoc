@@ -51,25 +51,57 @@ as defined in the properties section of your pom file.
 
 To parse a JSON string directly:
 
-  Coordinate c = Converter.fromJsonString(....);
+  MzQC mzQc = Converter.fromJsonString(....);
 
 Alternatively, to read the content from a file:
 
-  Coordinate c = Converter.fromFile(new File("path/to/file.mzQC"));
+  MzQC mzQc = Converter.fromFile(new File("path/to/file.mzQC"));
 
 Or, to read from a URL:
 
-  Coordinate c = Converter.fromUrl(new Url("https://raw.githubusercontent.com/HUPO-PSI/mzQC/master/doc/examples/QC2-sample-example.mzQC"));
+  MzQC mzQc = Converter.fromUrl(new URL("https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/QC2-sample-example.mzQC"));
   
-You can then access the MzQC object:
-
-  MzQC mzQc = c.getMzQC();
-
 === Writing an MzQC object model to JSON
 
-In order to write an MzQC object:
+You can use the jmzQC API to create an MzQC object:
 
-  Converter.toFile(mzQc, new File("path/to/write/file.mzQC"));
+  var inputFileCvParams = asList(new CvParameter("MS:1000747", null, "completion time", "2017-12-08-T15:38:57Z"));
+  var infi = new InputFile(new CvParameter("MS:1000584", null, "mzML format", null), inputFileCvParams, new URI("file:///dev/null"), "file.raw");
+  var anso = new AnalysisSoftware("QC:9999999", null, "bigwhopqc", null, new URI("file:///dev/null"), "1.2.3");  
+  var meta = new Metadata(asList(anso), null, asList(infi), "test_metadata");
+  var qm = new QualityMetric("QC:4000053", null, "RT duration", 99, null);
+  var rq = new BaseQuality(meta, asList(qm));
+  var sq = new BaseQuality(meta, asList(qm));
+  var cv = new ControlledVocabulary("TEST", new URI("https://www.eff.off"), null);
+  var mzqc = new MzQC(
+          null,
+          null,
+          asList(cv),
+          OffsetDateTime.now(),
+          "pytest-test file",
+          asList(rq),
+          asList(sq),
+          "1.0.0");
+
+In order to write an MzQC object, you can also use the Converter:
+
+  Converter.toJsonFile(mzqc, new File("path/to/write/file.mzQC"));
+
+=== Validating MzQC
+
+You can validate MzQC files local files or JSON string:
+  
+  Set<ValidationMessage> messages = Converter.validate(new File("path/to/file.mzQC"));
+
+Or from a URL:
+
+  Set<ValidationMessage> messages = Converter.validate(new URL("https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/QC2-sample-example.mzQC"));
+
+Or immediately from an MzQC object:
+
+  Set<ValidationMessage> messages = Converter.validate(mzqc));
+  
+The returned messages will be empty, if validation was successful. Otherwise, the messages will contain information on what was wrong and where in your mzQC document the issue was detected.
 
 == References
 

@@ -42,13 +42,13 @@ public class MzQCTest {
     @Test
     public void testReadMetaboBatchesExample() throws IOException {
         URL u = new URL(baseUrl + "metabo-batches.mzQC");
-        Coordinate c = Converter.of(u);
+        MzQC c = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
-        assertEquals(226, c.getMzQC().getRunQualities().size());
-        assertEquals(226, c.getMzQC().getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(2, c.getMzQC().getControlledVocabularies().size());
+        assertEquals(226, c.getRunQualities().size());
+        assertEquals(226, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(2, c.getControlledVocabularies().size());
     }
 
     @Test
@@ -56,60 +56,60 @@ public class MzQCTest {
         URL u = new URL(baseUrl + "QC2-sample-example.mzQC");
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
-        Coordinate d = Converter.of(u);
+        MzQC d = Converter.of(u);
         assertNotNull(d);
-        assertEquals(1, d.getMzQC().getRunQualities().size());
-        assertEquals(6, d.getMzQC().getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(6, d.getMzQC().getRunQualityMetrics(0).size());
-        assertEquals(1, d.getMzQC().getRunQualityMetricsByAccession(0, "MS:1003251").size());
-        assertEquals(0, d.getMzQC().getSetQualities().size());
-        assertEquals(1, d.getMzQC().getControlledVocabularies().size());
+        assertEquals(1, d.getRunQualities().size());
+        assertEquals(6, d.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(6, d.getRunQualityMetrics(0).size());
+        assertEquals(1, d.getRunQualityMetricsByAccession(0, "MS:1003251").size());
+        assertEquals(0, d.getSetQualities().size());
+        assertEquals(1, d.getControlledVocabularies().size());
     }
 
     @Test
     public void testWriteQC2SampleExample() throws IOException {
         URL u = new URL(baseUrl + "QC2-sample-example.mzQC");
-        Coordinate d = Converter.of(u);
+        MzQC d = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         assertNotNull(d);
-        assertEquals(1, d.getMzQC().getRunQualities().size());
-        assertEquals(0, d.getMzQC().getSetQualities().size());
-        assertEquals(1, d.getMzQC().getControlledVocabularies().size());
+        assertEquals(1, d.getRunQualities().size());
+        assertEquals(0, d.getSetQualities().size());
+        assertEquals(1, d.getControlledVocabularies().size());
         File testFile = File.createTempFile("QC2-sample-example", ".mzQC");
         File writtenFile = Converter.toJsonFile(d, testFile);
         Set<ValidationMessage> messages2 = Converter.validate(writtenFile);
         assertTrue(messages2.isEmpty());
-        Coordinate e = Converter.of(writtenFile);
-        assertEquals(d.getMzQC().getRunQualities().size(), e.getMzQC().getRunQualities().size());
-        assertEquals(d.getMzQC().getSetQualities().size(), e.getMzQC().getSetQualities().size());
-        assertEquals(d.getMzQC().getControlledVocabularies().size(), e.getMzQC().getControlledVocabularies().size());
+        MzQC e = Converter.of(writtenFile);
+        assertEquals(d.getRunQualities().size(), e.getRunQualities().size());
+        assertEquals(d.getSetQualities().size(), e.getSetQualities().size());
+        assertEquals(d.getControlledVocabularies().size(), e.getControlledVocabularies().size());
     }
 
     @Test
     public void testReadMultiRunExample() throws IOException {
         URL u = new URL(baseUrl + "set-of-runs.mzQC");
-        Coordinate c = Converter.of(u);
+        MzQC c = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         System.out.println(messages);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
-        assertEquals(0, c.getMzQC().getRunQualities().size());
-        assertEquals(3, c.getMzQC().getSetQualities().size());
-        assertEquals(4, c.getMzQC().getSetQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(2, c.getMzQC().getControlledVocabularies().size());
+        assertEquals(0, c.getRunQualities().size());
+        assertEquals(3, c.getSetQualities().size());
+        assertEquals(4, c.getSetQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(2, c.getControlledVocabularies().size());
     }
 
     @Test
     public void testReadSingleRunExample() throws IOException {
         URL u = new URL(baseUrl + "individual-runs.mzQC");
-        Coordinate c = Converter.of(u);
+        MzQC c = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
-        assertEquals(1, c.getMzQC().getRunQualities().size());
-        assertEquals(5, c.getMzQC().getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(1, c.getMzQC().getControlledVocabularies().size());
+        assertEquals(1, c.getRunQualities().size());
+        assertEquals(5, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(1, c.getControlledVocabularies().size());
     }
 
     @Test
@@ -117,12 +117,12 @@ public class MzQCTest {
         URL u = new URL(baseUrl + "Mtb-120-outlier-metrics.mzQC");
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
-        Coordinate c = Converter.of(u);
+        MzQC c = Converter.of(u);
         assertNotNull(c);
-        assertEquals(120, c.getMzQC().getRunQualities().size());
-        assertEquals(2040, c.getMzQC().getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(0, c.getMzQC().getSetQualities().size());
-        assertEquals(2, c.getMzQC().getControlledVocabularies().size());
+        assertEquals(120, c.getRunQualities().size());
+        assertEquals(2040, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(0, c.getSetQualities().size());
+        assertEquals(2, c.getControlledVocabularies().size());
     }
 
     @Test
@@ -130,12 +130,12 @@ public class MzQCTest {
         URL u = new URL(baseUrl + "Mtb-120-outlier-metrics.mzQC");
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
-        Coordinate c = Converter.of(u);
+        MzQC c = Converter.of(u);
         assertNotNull(c);
-        assertEquals(120, c.getMzQC().getRunQualities().size());
-        assertEquals(2040, c.getMzQC().getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(0, c.getMzQC().getSetQualities().size());
-        assertEquals(2, c.getMzQC().getControlledVocabularies().size());
+        assertEquals(120, c.getRunQualities().size());
+        assertEquals(2040, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(0, c.getSetQualities().size());
+        assertEquals(2, c.getControlledVocabularies().size());
     }
 
     @Test
@@ -157,11 +157,10 @@ public class MzQCTest {
                 asList(rq),
                 asList(sq),
                 "1.0.0");
-        var coordinate = new Coordinate(mzqc);
-        var messages = Converter.validate(Converter.toJsonString(coordinate));
+        var messages = Converter.validate(Converter.toJsonString(mzqc));
         assertTrue(messages.isEmpty());
         var file = File.createTempFile("python-sample-example", ".mzQC");
-        Converter.toJsonFile(coordinate, file);
+        Converter.toJsonFile(mzqc, file);
         var messages2 = Converter.validate(file);
         assertTrue(messages2.isEmpty());
     }

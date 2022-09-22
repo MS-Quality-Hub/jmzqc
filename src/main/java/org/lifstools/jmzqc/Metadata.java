@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 public class Metadata {
 
-    private List<AnalysisSoftwareElement> analysisSoftware = Collections.emptyList();
+    private List<AnalysisSoftware> analysisSoftware = Collections.emptyList();
     ;
     private List<CvParameter> cvParameters = Collections.emptyList();
     ;
@@ -35,18 +35,18 @@ public class Metadata {
     public Metadata() {
     }
 
-    public Metadata(List<AnalysisSoftwareElement> analysisSoftware, List<CvParameter> cvParameters, List<InputFile> inputFiles, String label) {
+    public Metadata(List<AnalysisSoftware> analysisSoftware, List<CvParameter> cvParameters, List<InputFile> inputFiles, String label) {
         this.analysisSoftware = analysisSoftware;
         this.cvParameters = cvParameters;
         this.inputFiles = inputFiles;
         this.label = label;
     }
 
-    public List<AnalysisSoftwareElement> getAnalysisSoftware() {
+    public List<AnalysisSoftware> getAnalysisSoftware() {
         return analysisSoftware;
     }
 
-    public void setAnalysisSoftware(List<AnalysisSoftwareElement> analysisSoftware) {
+    public void setAnalysisSoftware(List<AnalysisSoftware> analysisSoftware) {
         this.analysisSoftware = analysisSoftware;
     }
 

@@ -24,7 +24,7 @@ import java.util.Objects;
  *
  * Type of input file.
  */
-public class AnalysisSoftwareElement {
+public class AnalysisSoftware {
 
     private String accession;
     private String description;
@@ -33,10 +33,10 @@ public class AnalysisSoftwareElement {
     private URI uri;
     private String version;
 
-    public AnalysisSoftwareElement() {
+    public AnalysisSoftware() {
     }
 
-    public AnalysisSoftwareElement(String accession, String description, String name, Object value, URI uri, String version) {
+    public AnalysisSoftware(String accession, String description, String name, Object value, URI uri, String version) {
         this.accession = accession;
         this.description = description;
         this.name = name;
@@ -116,7 +116,7 @@ public class AnalysisSoftwareElement {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final AnalysisSoftwareElement other = (AnalysisSoftwareElement) obj;
+        final AnalysisSoftware other = (AnalysisSoftware) obj;
         if (!Objects.equals(this.accession, other.accession)) {
             return false;
         }

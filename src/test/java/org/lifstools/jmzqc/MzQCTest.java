@@ -15,10 +15,15 @@
  */
 package org.lifstools.jmzqc;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.networknt.schema.ValidationMessage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.OffsetDateTime;
+import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +36,7 @@ import org.junit.jupiter.api.Test;
  * @author nilshoffmann
  */
 public class MzQCTest {
+
     private final String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/";
 
     @Test
@@ -84,7 +90,7 @@ public class MzQCTest {
     public void testReadMultiRunExample() throws IOException {
         URL u = new URL(baseUrl + "set-of-runs.mzQC");
         Coordinate c = Converter.of(u);
-        Set<ValidationMessage> messages = Converter.validate(u); 
+        Set<ValidationMessage> messages = Converter.validate(u);
         System.out.println(messages);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
@@ -118,7 +124,7 @@ public class MzQCTest {
         assertEquals(0, c.getMzQC().getSetQualities().size());
         assertEquals(2, c.getMzQC().getControlledVocabularies().size());
     }
-    
+
     @Test
     public void testMtb120LocalExample() throws IOException {
         URL u = new URL(baseUrl + "Mtb-120-outlier-metrics.mzQC");
@@ -130,5 +136,33 @@ public class MzQCTest {
         assertEquals(2040, c.getMzQC().getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
         assertEquals(0, c.getMzQC().getSetQualities().size());
         assertEquals(2, c.getMzQC().getControlledVocabularies().size());
+    }
+
+    @Test
+    public void testCreateMzQCFile() throws URISyntaxException, JsonProcessingException, IOException {
+        var inputFileCvParams = asList(new CvParameter("MS:1000747", null, "completion time", "2017-12-08-T15:38:57Z"));
+        var infi = new InputFile(new CvParameter("MS:1000584", null, "mzML format", null), inputFileCvParams, new URI("file:///dev/null"), "file.raw");
+        var anso = new AnalysisSoftware("QC:9999999", null, "bigwhopqc", null, new URI("file:///dev/null"), "1.2.3");//   # isn't requiring a uri a bit too much?
+        var meta = new Metadata(asList(anso), null, asList(infi), "test_metadata");
+        var qm = new QualityMetric("QC:4000053", null, "RT duration", 99, null);
+        var rq = new BaseQuality(meta, asList(qm));
+        var sq = new BaseQuality(meta, asList(qm));
+        var cv = new ControlledVocabulary("TEST", new URI("https://www.eff.off"), null);
+        var mzqc = new MzQC(
+                null,
+                null,
+                asList(cv),
+                OffsetDateTime.now(),
+                "pytest-test file",
+                asList(rq),
+                asList(sq),
+                "1.0.0");
+        var coordinate = new Coordinate(mzqc);
+        Set<ValidationMessage> messages = Converter.validate(Converter.toJsonString(coordinate));
+        assertTrue(messages.isEmpty());
+        File file = File.createTempFile("python-sample-example", ".mzQC");
+        Converter.toJsonFile(coordinate, file);
+        Set<ValidationMessage> messages2 = Converter.validate(file);
+        assertTrue(messages2.isEmpty());
     }
 }

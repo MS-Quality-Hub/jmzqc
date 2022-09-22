@@ -81,7 +81,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><a class="image" href="https://github.com/lifs-tools/jmqzc"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: Experimental"/></a></span> <span class="image"><a class="image" href="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"><img src="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg" alt="CI"/></a></span></p>
+<p><span class="image"><a class="image" href="https://github.com/lifs-tools/jmqzc"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: Experimental"/></a></span> <span class="image"><a class="image" href="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"><img src="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg" alt="CI"/></a></span> <span class="image"><img src="https://img.shields.io/maven-central/v/org.lifs-tools/jmzqc" alt="Maven Central"/></span></p>
 </div>
 <div class="paragraph">
 <p>This project is a parser, validator and serializer implementation for <a href="https://github.com/HUPO-PSI/mzQC">mzQC: Reporting and exchange format for mass spectrometry quality control data</a>.</p>
@@ -117,6 +117,7 @@
 <ul class="sectlevel2">
 <li><a href="#reading_mzqc_json_into_the_object_model">Reading MzQC JSON into the object model</a></li>
 <li><a href="#writing_an_mzqc_object_model_to_json">Writing an MzQC object model to JSON</a></li>
+<li><a href="#validating_mzqc">Validating MzQC</a></li>
 </ul>
 </li>
 <li><a href="#references">References</a></li>
@@ -183,7 +184,7 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Coordinate c = Converter.fromJsonString(....);</pre>
+<pre>MzQC mzQc = Converter.fromJsonString(....);</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -191,7 +192,7 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Coordinate c = Converter.fromFile(new File("path/to/file.mzQC"));</pre>
+<pre>MzQC mzQc = Converter.fromFile(new File("path/to/file.mzQC"));</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -199,27 +200,73 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Coordinate c = Converter.fromUrl(new Url("https://raw.githubusercontent.com/HUPO-PSI/mzQC/master/doc/examples/QC2-sample-example.mzQC"));</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can then access the MzQC object:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>MzQC mzQc = c.getMzQC();</pre>
+<pre>MzQC mzQc = Converter.fromUrl(new URL("https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/QC2-sample-example.mzQC"));</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="writing_an_mzqc_object_model_to_json">Writing an MzQC object model to JSON</h3>
 <div class="paragraph">
-<p>In order to write an MzQC object:</p>
+<p>You can use the jmzQC API to create an MzQC object:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Converter.toFile(mzQc, new File("path/to/write/file.mzQC"));</pre>
+<pre>var inputFileCvParams = asList(new CvParameter("MS:1000747", null, "completion time", "2017-12-08-T15:38:57Z"));
+var infi = new InputFile(new CvParameter("MS:1000584", null, "mzML format", null), inputFileCvParams, new URI("file:///dev/null"), "file.raw");
+var anso = new AnalysisSoftware("QC:9999999", null, "bigwhopqc", null, new URI("file:///dev/null"), "1.2.3");
+var meta = new Metadata(asList(anso), null, asList(infi), "test_metadata");
+var qm = new QualityMetric("QC:4000053", null, "RT duration", 99, null);
+var rq = new BaseQuality(meta, asList(qm));
+var sq = new BaseQuality(meta, asList(qm));
+var cv = new ControlledVocabulary("TEST", new URI("https://www.eff.off"), null);
+var mzqc = new MzQC(
+        null,
+        null,
+        asList(cv),
+        OffsetDateTime.now(),
+        "pytest-test file",
+        asList(rq),
+        asList(sq),
+        "1.0.0");</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>In order to write an MzQC object, you can also use the Converter:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Converter.toJsonFile(mzqc, new File("path/to/write/file.mzQC"));</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="validating_mzqc">Validating MzQC</h3>
+<div class="paragraph">
+<p>You can validate MzQC files local files or JSON string:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Set&lt;ValidationMessage&gt; messages = Converter.validate(new File("path/to/file.mzQC"));</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or from a URL:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Set&lt;ValidationMessage&gt; messages = Converter.validate(new URL("https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/QC2-sample-example.mzQC"));</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or immediately from an MzQC object:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Set&lt;ValidationMessage&gt; messages = Converter.validate(mzqc);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The returned messages will be empty, if validation was successful. Otherwise, the messages will contain information on what was wrong and where in your mzQC document the issue was detected.</p>
 </div>
 </div>
 </div>

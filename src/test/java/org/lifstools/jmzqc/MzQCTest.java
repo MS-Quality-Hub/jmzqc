@@ -158,11 +158,11 @@ public class MzQCTest {
                 asList(sq),
                 "1.0.0");
         var coordinate = new Coordinate(mzqc);
-        Set<ValidationMessage> messages = Converter.validate(Converter.toJsonString(coordinate));
+        var messages = Converter.validate(Converter.toJsonString(coordinate));
         assertTrue(messages.isEmpty());
-        File file = File.createTempFile("python-sample-example", ".mzQC");
+        var file = File.createTempFile("python-sample-example", ".mzQC");
         Converter.toJsonFile(coordinate, file);
-        Set<ValidationMessage> messages2 = Converter.validate(file);
+        var messages2 = Converter.validate(file);
         assertTrue(messages2.isEmpty());
     }
 }

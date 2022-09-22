@@ -2,9 +2,7 @@
 Nils Hoffmann <nils.hoffmann@cebitec.uni-bielefeld.de>
 :toc: macro
 
-image:https://img.shields.io/badge/lifecycle-experimental-orange.svg["Lifecycle: Experimental", link="https://github.com/lifs-tools/jmqzc"] image:https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg["CI", link="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"] image:https://img.shields.io/maven-central/v/org.lifs-tools/jmzqc[Maven Central]
-//image:https://img.shields.io/github/release/lifs-tools/jgoslin.svg["Latest Release", link="https://github.com/lifs-tools/jmzqc/releases/latest"] 
-//image:https://zenodo.org/badge/DOI/10.5281/zenodo.3826474.svg["DOI", link="https://doi.org/10.5281/zenodo.3826474"]
+image:https://img.shields.io/badge/lifecycle-experimental-orange.svg["Lifecycle: Experimental", link="https://github.com/lifs-tools/jmqzc"] image:https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg["CI", link="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"] image:https://img.shields.io/maven-central/v/org.lifs-tools/jmzqc[Maven Central] image:https://img.shields.io/github/release/MS-Quality-hub/jmzqc.svg["Latest Release", link="https://github.com/MS-Quality-hub/jmzqc/releases/latest"] image:https://zenodo.org/badge/DOI/10.5281/zenodo.7105813.svg["DOI", link="https://doi.org/10.5281/zenodo.7105813"]
 
 This project is a parser, validator and serializer implementation for https://github.com/HUPO-PSI/mzQC[mzQC: Reporting and exchange format for mass spectrometry quality control data].
 

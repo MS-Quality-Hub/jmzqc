@@ -18,7 +18,7 @@
  * class for methods to read and write MzQC. The MzQC base object is wrapped in
  * a generic {@link Coordinate} object. 
  * 
- * Object bindings were generated using <a href="https://app.quicktype.io">Quicktype</a>.
+ * Object bindings were generated using <a href="https://app.quicktype.io">Quicktype</a> and simplified manually.
  *
  * @see Converter
  * @see Coordinate

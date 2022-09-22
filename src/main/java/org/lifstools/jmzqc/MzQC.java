@@ -30,10 +30,13 @@ public class MzQC {
     private String contactAddress;
     private String contactName;
     private List<ControlledVocabulary> controlledVocabularies = Collections.emptyList();
+    ;
     private OffsetDateTime creationDate;
     private String description;
     private List<BaseQuality> runQualities = Collections.emptyList();
+    ;
     private List<BaseQuality> setQualities = Collections.emptyList();
+    ;
     private String version;
 
     public MzQC() {

@@ -15,6 +15,7 @@
  */
 package org.lifstools.jmzqc;
 
+import java.net.URI;
 import java.util.Objects;
 
 /**
@@ -29,12 +30,13 @@ public class AnalysisSoftwareElement {
     private String description;
     private String name;
     private Object value;
-    private String uri;
+    private URI uri;
     private String version;
 
-    public AnalysisSoftwareElement(){}
-    
-    public AnalysisSoftwareElement(String accession, String description, String name, Object value, String uri, String version) {
+    public AnalysisSoftwareElement() {
+    }
+
+    public AnalysisSoftwareElement(String accession, String description, String name, Object value, URI uri, String version) {
         this.accession = accession;
         this.description = description;
         this.name = name;
@@ -75,11 +77,11 @@ public class AnalysisSoftwareElement {
         this.value = value;
     }
 
-    public String getUri() {
+    public URI getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(URI uri) {
         this.uri = uri;
     }
 

@@ -15,6 +15,8 @@
  */
 package org.lifstools.jmzqc;
 
+import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,14 +26,14 @@ import java.util.Objects;
 public class InputFile {
 
     private CvParameter fileFormat;
-    private List<CvParameter> fileProperties;
-    private String location;
+    private List<CvParameter> fileProperties = Collections.emptyList();
+    private URI location;
     private String name;
 
     public InputFile() {
     }
 
-    public InputFile(CvParameter fileFormat, List<CvParameter> fileProperties, String location, String name) {
+    public InputFile(CvParameter fileFormat, List<CvParameter> fileProperties, URI location, String name) {
         this.fileFormat = fileFormat;
         this.fileProperties = fileProperties;
         this.location = location;
@@ -54,11 +56,11 @@ public class InputFile {
         this.fileProperties = fileProperties;
     }
 
-    public String getLocation() {
+    public URI getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(URI location) {
         this.location = location;
     }
 

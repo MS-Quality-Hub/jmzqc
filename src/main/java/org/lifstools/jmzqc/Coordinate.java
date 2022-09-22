@@ -18,16 +18,16 @@ package org.lifstools.jmzqc;
 import java.util.Objects;
 
 /**
- * JSON schema specifying the mzQC format v1.0.0 developed by the HUPO-PSI Quality Control
- * working group (http://psidev.info/groups/quality-control).
+ * JSON schema specifying the mzQC format v1.0.0 developed by the HUPO-PSI
+ * Quality Control working group (http://psidev.info/groups/quality-control).
  */
-
 public class Coordinate {
 
     private MzQC mzQC;
-    
-    public Coordinate() {}
-    
+
+    public Coordinate() {
+    }
+
     public Coordinate(MzQC mzQC) {
         this.mzQC = mzQC;
     }
@@ -39,7 +39,7 @@ public class Coordinate {
     public void setMzQC(MzQC mzQC) {
         this.mzQC = mzQC;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;

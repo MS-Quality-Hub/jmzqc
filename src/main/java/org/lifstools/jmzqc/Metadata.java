@@ -25,8 +25,11 @@ import java.util.Objects;
 public class Metadata {
 
     private List<AnalysisSoftwareElement> analysisSoftware = Collections.emptyList();
+    ;
     private List<CvParameter> cvParameters = Collections.emptyList();
+    ;
     private List<InputFile> inputFiles = Collections.emptyList();
+    ;
     private String label;
 
     public Metadata() {

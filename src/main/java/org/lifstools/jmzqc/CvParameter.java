@@ -30,8 +30,9 @@ public class CvParameter {
     private String name;
     private Object value;
 
-    public CvParameter(){}
-    
+    public CvParameter() {
+    }
+
     public CvParameter(String accession, String description, String name, Object value) {
         this.accession = accession;
         this.description = description;

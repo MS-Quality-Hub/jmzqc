@@ -32,7 +32,7 @@ import java.util.Objects;
 public class Unit {
 
     public CvParameter cvParameterValue;
-    public List<CvParameter> cvParameterArrayValue;// = Collections.emptyList();
+    public List<CvParameter> cvParameterArrayValue = Collections.emptyList();
 
     public Unit() {
     }

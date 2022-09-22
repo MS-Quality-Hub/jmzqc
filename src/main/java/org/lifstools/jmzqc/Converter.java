@@ -15,6 +15,7 @@
  */
 package org.lifstools.jmzqc;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonFactoryBuilder;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.*;
@@ -22,6 +23,11 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SchemaValidatorsConfig;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -36,6 +42,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides convenience functions to parse date and time strings and to
@@ -56,6 +64,7 @@ public class Converter {
 
     /**
      * Parse a date and time string using the default date and time formatter.
+     *
      * @param str the date time string
      * @return an {@link OffsetDateTime} object.
      */
@@ -90,8 +99,8 @@ public class Converter {
      * @return {@link Coordinate} holding the MzQC object.
      * @throws IOException
      */
-    public static Coordinate fromFile(File file) throws IOException {
-        return fromJsonString(Files.readString(file.toPath(), StandardCharsets.UTF_8));
+    public static Coordinate of(File file) throws IOException {
+        return of(Files.readString(file.toPath(), StandardCharsets.UTF_8));
     }
 
     /**
@@ -101,23 +110,11 @@ public class Converter {
      * @return {@link Coordinate} holding the MzQC object.
      * @throws IOException
      */
-    public static Coordinate fromUrl(URL url) throws IOException {
+    public static Coordinate of(URL url) throws IOException {
         try ( InputStream in = url.openStream()) {
             byte[] bytes = in.readAllBytes();
-            return fromJsonString(new String(bytes, StandardCharsets.UTF_8));
+            return of(new String(bytes, StandardCharsets.UTF_8));
         }
-    }
-
-    /**
-     * Return a Coordinate holding an MzQC object from a URL string.
-     *
-     * @param urlString the urlString from where to load the mzQC json data.
-     * @return {@link Coordinate} holding the MzQC object.
-     * @throws IOException
-     */
-    public static Coordinate fromUrlString(String urlString) throws MalformedURLException, IOException {
-        URL url = new URL(urlString);
-        return fromUrl(url);
     }
 
     /**
@@ -128,8 +125,43 @@ public class Converter {
      * @return {@link Coordinate} holding the MzQC object.
      * @throws IOException
      */
-    public static Coordinate fromJsonString(String json) throws IOException {
+    public static Coordinate of(String json) throws IOException {
         return getObjectReader().readValue(json);
+    }
+
+    /**
+     * Validate a mzQC JSON string.
+     *
+     * @param json the mzQC data in JSON format.
+     * @return a set of validation messages.
+     * @throws JsonProcessingException if the JSON is malformed.
+     */
+    public static Set<ValidationMessage> validate(String json) throws JsonProcessingException {
+        return defaultSchema().validate(getObjectReader().readTree(json));
+    }
+
+    /**
+     * Validate a mzQC JSON file.
+     *
+     * @param file the mzQC data file in JSON format.
+     * @return a set of validation messages.
+     * @throws JsonProcessingException if the JSON is malformed.
+     */
+    public static Set<ValidationMessage> validate(File file) throws JsonProcessingException, IOException {
+        return defaultSchema().validate(getObjectReader().readTree(Files.readString(file.toPath(), StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * Validate a mzQC JSON URL.
+     *
+     * @param url the url to read mzQC data in JSON format from.
+     * @return a set of validation messages.
+     * @throws JsonProcessingException if the JSON is malformed.
+     */
+    public static Set<ValidationMessage> validate(URL url) throws JsonProcessingException, IOException {
+        try ( InputStream is = url.openStream()) {
+            return defaultSchema().validate(getObjectReader().readTree(is));
+        }
     }
 
     /**
@@ -166,6 +198,7 @@ public class Converter {
         mapper.findAndRegisterModules();
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        mapper.setSerializationInclusion(Include.NON_EMPTY);
         SimpleModule module = new SimpleModule();
         module.addDeserializer(OffsetDateTime.class, new JsonDeserializer<OffsetDateTime>() {
             @Override
@@ -192,4 +225,25 @@ public class Converter {
         }
         return writer;
     }
+
+    private static JsonSchema defaultSchema() {
+        JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+        SchemaValidatorsConfig config = new SchemaValidatorsConfig();
+        config.setHandleNullableField(false);
+        return factory.getSchema(Converter.class.getResourceAsStream("/schema/mzqc_schema.json"), config);
+    }
+
+//    private static JsonSchemaFactory customSchemaFactory() {
+//        String URI = "http://json-schema.org/draft-07/schema";
+//        String ID = "$id";
+//        JsonMetaSchema overrideEmailValidatorMetaSchema = new JsonMetaSchema.Builder(URI)
+//            .idKeyword(ID)
+//            // Override EmailValidator
+//            .addFormat(new DateTimeFormat("email", "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"))
+//            .build();
+//
+//    return new JsonSchemaFactory.Builder().defaultMetaSchemaURI(overrideEmailValidatorMetaSchema.getUri())
+//            .addMetaSchema(overrideEmailValidatorMetaSchema)
+//            .build();
+//    }
 }

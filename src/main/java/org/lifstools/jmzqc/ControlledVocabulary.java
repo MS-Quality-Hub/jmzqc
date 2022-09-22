@@ -15,6 +15,7 @@
  */
 package org.lifstools.jmzqc;
 
+import java.net.URI;
 import java.util.Objects;
 
 /**
@@ -24,12 +25,13 @@ import java.util.Objects;
 public class ControlledVocabulary {
 
     private String name;
-    private String uri;
+    private URI uri;
     private String version;
 
-    public ControlledVocabulary(){}
-    
-    public ControlledVocabulary(String name, String uri, String version) {
+    public ControlledVocabulary() {
+    }
+
+    public ControlledVocabulary(String name, URI uri, String version) {
         this.name = name;
         this.uri = uri;
         this.version = version;
@@ -43,11 +45,11 @@ public class ControlledVocabulary {
         this.name = name;
     }
 
-    public String getUri() {
+    public URI getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(URI uri) {
         this.uri = uri;
     }
 

@@ -15,6 +15,7 @@
  */
 package org.lifstools.jmzqc;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,10 +30,11 @@ import java.util.Objects;
 public class BaseQuality {
 
     private Metadata metadata;
-    private List<QualityMetric> qualityMetrics;// = Collections.emptyList();
+    private List<QualityMetric> qualityMetrics = Collections.emptyList();
 
-    public BaseQuality(){}
-    
+    public BaseQuality() {
+    }
+
     public BaseQuality(Metadata metadata, List<QualityMetric> qualityMetrics) {
         this.metadata = metadata;
         this.qualityMetrics = qualityMetrics;

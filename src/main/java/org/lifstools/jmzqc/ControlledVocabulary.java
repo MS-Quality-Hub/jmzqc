@@ -16,79 +16,12 @@
 package org.lifstools.jmzqc;
 
 import java.net.URI;
-import java.util.Objects;
 
 /**
  * Element describing a controlled vocabulary used to refer to the source of the
  * used CV terms in qualityMetric objects (and others).
  */
-public class ControlledVocabulary {
-
-    private String name;
-    private URI uri;
-    private String version;
-
-    public ControlledVocabulary() {
-    }
-
-    public ControlledVocabulary(String name, URI uri, String version) {
-        this.name = name;
-        this.uri = uri;
-        this.version = version;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public URI getUri() {
-        return uri;
-    }
-
-    public void setUri(URI uri) {
-        this.uri = uri;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.name);
-        hash = 41 * hash + Objects.hashCode(this.uri);
-        hash = 41 * hash + Objects.hashCode(this.version);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ControlledVocabulary other = (ControlledVocabulary) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.uri, other.uri)) {
-            return false;
-        }
-        return Objects.equals(this.version, other.version);
-    }
-
-}
+public record ControlledVocabulary(
+        String name, 
+        URI uri, 
+        String version){}

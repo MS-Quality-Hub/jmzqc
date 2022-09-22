@@ -19,152 +19,31 @@ import com.fasterxml.jackson.annotation.*;
 import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
  * Root element of an mzQC file.
  */
-public class MzQC {
+public record MzQC(
+        String contactAddress,
+        String contactName,
+        List<ControlledVocabulary> controlledVocabularies,
+        OffsetDateTime creationDate,
+        String description,
+        List<BaseQuality> runQualities,
+        List<BaseQuality> setQualities,
+        String version) {
 
-    private String contactAddress;
-    private String contactName;
-    private List<ControlledVocabulary> controlledVocabularies = Collections.emptyList();
-    ;
-    private OffsetDateTime creationDate;
-    private String description;
-    private List<BaseQuality> runQualities = Collections.emptyList();
-    ;
-    private List<BaseQuality> setQualities = Collections.emptyList();
-    ;
-    private String version;
-
-    public MzQC() {
-    }
-
-    public MzQC(String contactAddress, String contactName, List<ControlledVocabulary> controlledVocabularies, OffsetDateTime creationDate, String description, List<BaseQuality> runQualities, List<BaseQuality> setQualities, String version) {
-        this.contactAddress = contactAddress;
-        this.contactName = contactName;
-        this.controlledVocabularies = controlledVocabularies;
-        this.creationDate = creationDate;
-        this.description = description;
-        this.runQualities = runQualities;
-        this.setQualities = setQualities;
-        this.version = version;
-    }
-
-    public String getContactAddress() {
-        return contactAddress;
-    }
-
-    public void setContactAddress(String contactAddress) {
-        this.contactAddress = contactAddress;
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public List<ControlledVocabulary> getControlledVocabularies() {
-        return controlledVocabularies;
-    }
-
-    public void setControlledVocabularies(List<ControlledVocabulary> controlledVocabularies) {
-        this.controlledVocabularies = controlledVocabularies;
-    }
-
-    public OffsetDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(OffsetDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<BaseQuality> getRunQualities() {
-        return runQualities;
-    }
-
-    public void setRunQualities(List<BaseQuality> runQualities) {
-        this.runQualities = runQualities;
-    }
-
-    public List<BaseQuality> getSetQualities() {
-        return setQualities;
-    }
-
-    public void setSetQualities(List<BaseQuality> setQualities) {
-        this.setQualities = setQualities;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.contactAddress);
-        hash = 47 * hash + Objects.hashCode(this.contactName);
-        hash = 47 * hash + Objects.hashCode(this.controlledVocabularies);
-        hash = 47 * hash + Objects.hashCode(this.creationDate);
-        hash = 47 * hash + Objects.hashCode(this.description);
-        hash = 47 * hash + Objects.hashCode(this.runQualities);
-        hash = 47 * hash + Objects.hashCode(this.setQualities);
-        hash = 47 * hash + Objects.hashCode(this.version);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+    public MzQC        {
+        if (controlledVocabularies == null) {
+            controlledVocabularies = Collections.emptyList();
         }
-        if (obj == null) {
-            return false;
+        if (runQualities == null) {
+            runQualities = Collections.emptyList();
         }
-        if (getClass() != obj.getClass()) {
-            return false;
+        if (setQualities == null) {
+            setQualities = Collections.emptyList();
         }
-        final MzQC other = (MzQC) obj;
-        if (!Objects.equals(this.contactAddress, other.contactAddress)) {
-            return false;
-        }
-        if (!Objects.equals(this.contactName, other.contactName)) {
-            return false;
-        }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.version, other.version)) {
-            return false;
-        }
-        if (!Objects.equals(this.controlledVocabularies, other.controlledVocabularies)) {
-            return false;
-        }
-        if (!Objects.equals(this.creationDate, other.creationDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.runQualities, other.runQualities)) {
-            return false;
-        }
-        return Objects.equals(this.setQualities, other.setQualities);
     }
 
     /**
@@ -177,8 +56,8 @@ public class MzQC {
      */
     @JsonIgnore
     public List<QualityMetric> getRunQualityMetrics(int index) {
-        if (index >= 0 && index < getRunQualities().size()) {
-            return getRunQualities().get(index).getQualityMetrics();
+        if (index >= 0 && index < runQualities().size()) {
+            return runQualities().get(index).qualityMetrics();
         }
         throw new IllegalArgumentException("Can not access run " + index);
     }
@@ -194,9 +73,9 @@ public class MzQC {
      */
     @JsonIgnore
     public List<QualityMetric> getRunQualityMetricsByAccession(int index, String accession) {
-        if (index >= 0 && index < getRunQualities().size()) {
-            return getRunQualities().get(index).getQualityMetrics().stream().filter((qm) -> {
-                return accession.equals(qm.getAccession());
+        if (index >= 0 && index < runQualities().size()) {
+            return runQualities().get(index).qualityMetrics().stream().filter((qm) -> {
+                return accession.equals(qm.accession());
             }).collect(Collectors.toList());
         }
         throw new IllegalArgumentException("Can not access run " + index);

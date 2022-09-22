@@ -46,9 +46,9 @@ public class MzQCTest {
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
-        assertEquals(226, c.getRunQualities().size());
-        assertEquals(226, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(2, c.getControlledVocabularies().size());
+        assertEquals(226, c.runQualities().size());
+        assertEquals(226, c.runQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(2, c.controlledVocabularies().size());
     }
 
     @Test
@@ -58,12 +58,12 @@ public class MzQCTest {
         assertTrue(messages.isEmpty());
         MzQC d = Converter.of(u);
         assertNotNull(d);
-        assertEquals(1, d.getRunQualities().size());
-        assertEquals(6, d.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(1, d.runQualities().size());
+        assertEquals(6, d.runQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
         assertEquals(6, d.getRunQualityMetrics(0).size());
         assertEquals(1, d.getRunQualityMetricsByAccession(0, "MS:1003251").size());
-        assertEquals(0, d.getSetQualities().size());
-        assertEquals(1, d.getControlledVocabularies().size());
+        assertEquals(0, d.setQualities().size());
+        assertEquals(1, d.controlledVocabularies().size());
     }
 
     @Test
@@ -73,17 +73,17 @@ public class MzQCTest {
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         assertNotNull(d);
-        assertEquals(1, d.getRunQualities().size());
-        assertEquals(0, d.getSetQualities().size());
-        assertEquals(1, d.getControlledVocabularies().size());
+        assertEquals(1, d.runQualities().size());
+        assertEquals(0, d.setQualities().size());
+        assertEquals(1, d.controlledVocabularies().size());
         File testFile = File.createTempFile("QC2-sample-example", ".mzQC");
         File writtenFile = Converter.toJsonFile(d, testFile);
         Set<ValidationMessage> messages2 = Converter.validate(writtenFile);
         assertTrue(messages2.isEmpty());
         MzQC e = Converter.of(writtenFile);
-        assertEquals(d.getRunQualities().size(), e.getRunQualities().size());
-        assertEquals(d.getSetQualities().size(), e.getSetQualities().size());
-        assertEquals(d.getControlledVocabularies().size(), e.getControlledVocabularies().size());
+        assertEquals(d.runQualities().size(), e.runQualities().size());
+        assertEquals(d.setQualities().size(), e.setQualities().size());
+        assertEquals(d.controlledVocabularies().size(), e.controlledVocabularies().size());
     }
 
     @Test
@@ -94,10 +94,10 @@ public class MzQCTest {
         System.out.println(messages);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
-        assertEquals(0, c.getRunQualities().size());
-        assertEquals(3, c.getSetQualities().size());
-        assertEquals(4, c.getSetQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(2, c.getControlledVocabularies().size());
+        assertEquals(0, c.runQualities().size());
+        assertEquals(3, c.setQualities().size());
+        assertEquals(4, c.setQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(2, c.controlledVocabularies().size());
     }
 
     @Test
@@ -107,9 +107,9 @@ public class MzQCTest {
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         assertNotNull(c);
-        assertEquals(1, c.getRunQualities().size());
-        assertEquals(5, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(1, c.getControlledVocabularies().size());
+        assertEquals(1, c.runQualities().size());
+        assertEquals(5, c.runQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(1, c.controlledVocabularies().size());
     }
 
     @Test
@@ -119,10 +119,10 @@ public class MzQCTest {
         assertTrue(messages.isEmpty());
         MzQC c = Converter.of(u);
         assertNotNull(c);
-        assertEquals(120, c.getRunQualities().size());
-        assertEquals(2040, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(0, c.getSetQualities().size());
-        assertEquals(2, c.getControlledVocabularies().size());
+        assertEquals(120, c.runQualities().size());
+        assertEquals(2040, c.runQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(0, c.setQualities().size());
+        assertEquals(2, c.controlledVocabularies().size());
     }
 
     @Test
@@ -132,10 +132,10 @@ public class MzQCTest {
         assertTrue(messages.isEmpty());
         MzQC c = Converter.of(u);
         assertNotNull(c);
-        assertEquals(120, c.getRunQualities().size());
-        assertEquals(2040, c.getRunQualities().stream().map(BaseQuality::getQualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(0, c.getSetQualities().size());
-        assertEquals(2, c.getControlledVocabularies().size());
+        assertEquals(120, c.runQualities().size());
+        assertEquals(2040, c.runQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(0, c.setQualities().size());
+        assertEquals(2, c.controlledVocabularies().size());
     }
 
     @Test

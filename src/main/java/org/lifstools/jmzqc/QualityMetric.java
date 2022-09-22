@@ -16,7 +16,6 @@
 package org.lifstools.jmzqc;
 
 import com.fasterxml.jackson.annotation.*;
-import java.util.Objects;
 
 /**
  * Element containing the value and description of a QC metric defined in a
@@ -27,102 +26,12 @@ import java.util.Objects;
  *
  * Type of input file.
  */
-public class QualityMetric {
-
-    private String accession;
-    private String description;
-    private String name;
-    private Object value;
-    private Unit unit;
-
-    public QualityMetric() {
-    }
-
-    public QualityMetric(String accession, String description, String name, Object value, Unit unit) {
-        this.accession = accession;
-        this.description = description;
-        this.name = name;
-        this.value = value;
-        this.unit = unit;
-    }
-
-    public String getAccession() {
-        return accession;
-    }
-
-    public void setAccession(String accession) {
-        this.accession = accession;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.accession);
-        hash = 37 * hash + Objects.hashCode(this.description);
-        hash = 37 * hash + Objects.hashCode(this.name);
-        hash = 37 * hash + Objects.hashCode(this.value);
-        hash = 37 * hash + Objects.hashCode(this.unit);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final QualityMetric other = (QualityMetric) obj;
-        if (!Objects.equals(this.accession, other.accession)) {
-            return false;
-        }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.value, other.value)) {
-            return false;
-        }
-        return Objects.equals(this.unit, other.unit);
-    }
+public record QualityMetric(
+        String accession,
+        String description,
+        String name,
+        Object value,
+        Unit unit) {
 
     @JsonIgnore
     public Long toLong() {

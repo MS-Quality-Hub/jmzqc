@@ -15,50 +15,10 @@
  */
 package org.lifstools.jmzqc;
 
-import java.util.Objects;
-
 /**
  * JSON schema specifying the mzQC format v1.0.0 developed by the HUPO-PSI
  * Quality Control working group (http://psidev.info/groups/quality-control).
  */
-public class Coordinate {
+public record Coordinate(MzQC mzQC) {
 
-    private MzQC mzQC;
-
-    public Coordinate() {
-    }
-
-    public Coordinate(MzQC mzQC) {
-        this.mzQC = mzQC;
-    }
-
-    public MzQC getMzQC() {
-        return mzQC;
-    }
-
-    public void setMzQC(MzQC mzQC) {
-        this.mzQC = mzQC;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.mzQC);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Coordinate other = (Coordinate) obj;
-        return Objects.equals(this.mzQC, other.mzQC);
-    }
 }

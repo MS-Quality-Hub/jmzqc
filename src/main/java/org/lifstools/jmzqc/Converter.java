@@ -126,7 +126,7 @@ public class Converter {
      * @throws IOException
      */
     public static MzQC of(String json) throws IOException {
-        return ((Coordinate) getObjectReader().readValue(json)).getMzQC();
+        return ((Coordinate) getObjectReader().readValue(json)).mzQC();
     }
 
     /**

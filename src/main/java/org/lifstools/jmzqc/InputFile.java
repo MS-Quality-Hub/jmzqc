@@ -18,92 +18,19 @@ package org.lifstools.jmzqc;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Input file used to generate the QC metrics.
  */
-public class InputFile {
+public record InputFile(
+        CvParameter fileFormat,
+        List<CvParameter> fileProperties,
+        URI location,
+        String name) {
 
-    private CvParameter fileFormat;
-    private List<CvParameter> fileProperties = Collections.emptyList();
-    private URI location;
-    private String name;
-
-    public InputFile() {
-    }
-
-    public InputFile(CvParameter fileFormat, List<CvParameter> fileProperties, URI location, String name) {
-        this.fileFormat = fileFormat;
-        this.fileProperties = fileProperties;
-        this.location = location;
-        this.name = name;
-    }
-
-    public CvParameter getFileFormat() {
-        return fileFormat;
-    }
-
-    public void setFileFormat(CvParameter fileFormat) {
-        this.fileFormat = fileFormat;
-    }
-
-    public List<CvParameter> getFileProperties() {
-        return fileProperties;
-    }
-
-    public void setFileProperties(List<CvParameter> fileProperties) {
-        this.fileProperties = fileProperties;
-    }
-
-    public URI getLocation() {
-        return location;
-    }
-
-    public void setLocation(URI location) {
-        this.location = location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.fileFormat);
-        hash = 83 * hash + Objects.hashCode(this.fileProperties);
-        hash = 83 * hash + Objects.hashCode(this.location);
-        hash = 83 * hash + Objects.hashCode(this.name);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+    public InputFile    {
+        if (fileProperties == null) {
+            fileProperties = Collections.emptyList();
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final InputFile other = (InputFile) obj;
-        if (!Objects.equals(this.location, other.location)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.fileFormat, other.fileFormat)) {
-            return false;
-        }
-        return Objects.equals(this.fileProperties, other.fileProperties);
     }
-
 }

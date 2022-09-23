@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.lifs-tools</groupId>
     <artifactId>jmzqc</artifactId>
-    <version>1.0.0-RC1</version>
+    <version>1.0.0-RC2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>jmzQC</name>
     <description>jmzQC is the Java reference implementation to read, create, validate and write the mzQC format.</description>
@@ -114,6 +114,11 @@
             <artifactId>json-schema-validator</artifactId>
             <version>1.0.72</version>
         </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.5.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -125,6 +130,12 @@
         <github.global.server>github-site</github.global.server>
     </properties>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -286,31 +297,10 @@
             </plugins>
         </pluginManagement>
         <plugins>
-            <!--            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                         Copy the readme file to the site source files so that a page is generated from it. 
-                        <id>copy-readme</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/generated-site/asciidoc</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}</directory>
-                                    <includes>
-                                        <include>README.adoc</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>3.1.0</version>
@@ -319,7 +309,6 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <target>
-                                <!--                                <copy file="${basedir}/README.adoc" tofile="${basedir}/target/generated-site/asciidoc/readme.adoc" />-->
                                 <copy file="${basedir}/README.adoc" tofile="${basedir}/src/site/asciidoc/index.adoc" />
                             </target>
                         </configuration>
@@ -330,10 +319,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
@@ -341,6 +326,25 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>
+                                org.lifstools.jmzqc.CmdLineParser
+                            </mainClass>
+                            <classifier>cli</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -530,22 +534,6 @@
                             <autoReleaseAfterClose>false</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
-<!--                    <plugin>
-                        <groupId>com.github.github</groupId>
-                        <artifactId>site-maven-plugin</artifactId>
-                        <version>0.12</version>
-                        <configuration>
-                            <message>Creating site for ${project.version}</message>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>site</goal>
-                                </goals>
-                                <phase>site</phase>
-                            </execution>
-                        </executions>
-                    </plugin>-->
                 </plugins>
             </build>
         </profile>

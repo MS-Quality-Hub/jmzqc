@@ -25,7 +25,13 @@ This generates the necessary domain specific code for Java.
 
 == Using the project code releases via Maven Central
 
-Note: The library will be made available via Maven Central. To search for releases, go to https://search.maven.org/search?q=g:org.lifs-tools+a:jmzqc
+This library requires Java 17 or later to run.
+
+[NOTE]
+====
+The library will be made available via Maven Central. To search for releases, go to https://search.maven.org/search?q=g:org.lifs-tools+a:jmzqc
+
+====
 
 To use the parser libraries (reading and validation) in your own Maven projects, use the following dependency:
 

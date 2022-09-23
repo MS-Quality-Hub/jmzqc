@@ -25,7 +25,7 @@ This generates the necessary domain specific code for Java.
 
 == Using the project code releases via Maven Central
 
-Note: The library will be made available via Maven Central. To search for releases, go to https://search.maven.org/search?q=org.lifs-tools
+Note: The library will be made available via Maven Central. To search for releases, go to https://search.maven.org/search?q=g:org.lifs-tools+a:jmzqc
 
 To use the parser libraries (reading and validation) in your own Maven projects, use the following dependency:
 
@@ -100,6 +100,42 @@ Or immediately from an MzQC object:
   Set<ValidationMessage> messages = Converter.validate(mzqc);
   
 The returned messages will be empty, if validation was successful. Otherwise, the messages will contain information on what was wrong and where in your mzQC document the issue was detected.
+
+Alternatively, you can also download the 'cli' jar from Maven central https://search.maven.org/search?q=g:org.lifs-tools+a:jmzqc
+
+Make the `jmzqc-1.0.0-bin.jar` executable. Please replace `1.0.0` with the correct version. Then run:
+
+  ./jmzqc-1.0.0-bin.jar
+
+to see the command line prompt:
+
+  usage: jmzqc
+   -f,--file <arg>         Input a file name to read from for lipid name for
+                           parsing. Each lipid name must be on a separate
+                           line.
+   -h,--help               Print help message.
+   -o,--outputFile <arg>   Write output to provided file in tsv format
+                           instead of to std out.
+   -v,--version            Print version information.
+
+The CLI jar will automatically validate any mzQC file provided against the latest JSON schema. 
+If validation was successful, the return code will be 0 and `Validation successful!` will be printed to std out. 
+If validation was unsuccessful, meaning validation messages have been produced, the exit code will be 1.
+Validation messages are printed to std err. This is an example for a file with an invalid date-time format (missing time zone information):
+
+  ./jmzqc-1.0.0-cli.jar -f QC2-sample-example.mzQC
+  20:08:18 [main] ERROR com.networknt.schema.DateTimeValidator - Invalid date-time: No zone offset information found
+  Echoing output to stderr.
+  Code    Message Path    SchemaPath      Type    MessageString
+  1034    $.mzQC.creationDate: 2020-12-03T19:51:02 ist ein ungültiges date-time   $.mzQC.creationDate     #/properties/mzQC/properties/creationDate       dateTime        $.mzQC.creationDate: 2020-12-03T19:51:02 ist ein ungültiges date-time
+
+Alternatively, you can redirect validation message output into a file:
+
+  ./jmzqc-1.0.0-cli.jar -f QC2-sample-example.mzQC -o jmzqc-out.tsv
+  20:11:11 [main] ERROR com.networknt.schema.DateTimeValidator - Invalid date-time: No zone offset information found
+  Saving output to 'jmzqc-out.tsv'.
+
+The file `jmzqc-out.tsv` will then contain the same output as the std out output above.
 
 == References
 

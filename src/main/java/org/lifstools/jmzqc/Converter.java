@@ -207,6 +207,7 @@ public class Converter {
         ObjectMapper mapper = new ObjectMapper(jfb.build());
         mapper.findAndRegisterModules();
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
         mapper.setSerializationInclusion(Include.NON_EMPTY);
         SimpleModule module = new SimpleModule();
@@ -243,17 +244,4 @@ public class Converter {
         return factory.getSchema(Converter.class.getResourceAsStream("/schema/mzqc_schema.json"), config);
     }
 
-//    private static JsonSchemaFactory customSchemaFactory() {
-//        String URI = "http://json-schema.org/draft-07/schema";
-//        String ID = "$id";
-//        JsonMetaSchema overrideEmailValidatorMetaSchema = new JsonMetaSchema.Builder(URI)
-//            .idKeyword(ID)
-//            // Override EmailValidator
-//            .addFormat(new DateTimeFormat("email", "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"))
-//            .build();
-//
-//    return new JsonSchemaFactory.Builder().defaultMetaSchemaURI(overrideEmailValidatorMetaSchema.getUri())
-//            .addMetaSchema(overrideEmailValidatorMetaSchema)
-//            .build();
-//    }
 }

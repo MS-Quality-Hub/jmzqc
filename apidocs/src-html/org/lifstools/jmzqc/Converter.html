@@ -220,56 +220,44 @@
 <span class="source-line-no">207</span><span id="line-207">        ObjectMapper mapper = new ObjectMapper(jfb.build());</span>
 <span class="source-line-no">208</span><span id="line-208">        mapper.findAndRegisterModules();</span>
 <span class="source-line-no">209</span><span id="line-209">        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);</span>
-<span class="source-line-no">210</span><span id="line-210">        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);</span>
-<span class="source-line-no">211</span><span id="line-211">        mapper.setSerializationInclusion(Include.NON_EMPTY);</span>
-<span class="source-line-no">212</span><span id="line-212">        SimpleModule module = new SimpleModule();</span>
-<span class="source-line-no">213</span><span id="line-213">        module.addDeserializer(OffsetDateTime.class, new JsonDeserializer&lt;OffsetDateTime&gt;() {</span>
-<span class="source-line-no">214</span><span id="line-214">            @Override</span>
-<span class="source-line-no">215</span><span id="line-215">            public OffsetDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {</span>
-<span class="source-line-no">216</span><span id="line-216">                String value = jsonParser.getText();</span>
-<span class="source-line-no">217</span><span id="line-217">                return Converter.parseDateTimeString(value);</span>
-<span class="source-line-no">218</span><span id="line-218">            }</span>
-<span class="source-line-no">219</span><span id="line-219">        });</span>
-<span class="source-line-no">220</span><span id="line-220">        mapper.registerModule(module);</span>
-<span class="source-line-no">221</span><span id="line-221">        reader = mapper.readerFor(Coordinate.class);</span>
-<span class="source-line-no">222</span><span id="line-222">        writer = mapper.writerFor(Coordinate.class);</span>
-<span class="source-line-no">223</span><span id="line-223">    }</span>
-<span class="source-line-no">224</span><span id="line-224"></span>
-<span class="source-line-no">225</span><span id="line-225">    private static ObjectReader getObjectReader() {</span>
-<span class="source-line-no">226</span><span id="line-226">        if (reader == null) {</span>
-<span class="source-line-no">227</span><span id="line-227">            instantiateMapper();</span>
-<span class="source-line-no">228</span><span id="line-228">        }</span>
-<span class="source-line-no">229</span><span id="line-229">        return reader;</span>
-<span class="source-line-no">230</span><span id="line-230">    }</span>
-<span class="source-line-no">231</span><span id="line-231"></span>
-<span class="source-line-no">232</span><span id="line-232">    private static ObjectWriter getObjectWriter() {</span>
-<span class="source-line-no">233</span><span id="line-233">        if (writer == null) {</span>
-<span class="source-line-no">234</span><span id="line-234">            instantiateMapper();</span>
-<span class="source-line-no">235</span><span id="line-235">        }</span>
-<span class="source-line-no">236</span><span id="line-236">        return writer;</span>
-<span class="source-line-no">237</span><span id="line-237">    }</span>
-<span class="source-line-no">238</span><span id="line-238"></span>
-<span class="source-line-no">239</span><span id="line-239">    private static JsonSchema defaultSchema() {</span>
-<span class="source-line-no">240</span><span id="line-240">        JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);</span>
-<span class="source-line-no">241</span><span id="line-241">        SchemaValidatorsConfig config = new SchemaValidatorsConfig();</span>
-<span class="source-line-no">242</span><span id="line-242">        config.setHandleNullableField(false);</span>
-<span class="source-line-no">243</span><span id="line-243">        return factory.getSchema(Converter.class.getResourceAsStream("/schema/mzqc_schema.json"), config);</span>
-<span class="source-line-no">244</span><span id="line-244">    }</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">//    private static JsonSchemaFactory customSchemaFactory() {</span>
-<span class="source-line-no">247</span><span id="line-247">//        String URI = "http://json-schema.org/draft-07/schema";</span>
-<span class="source-line-no">248</span><span id="line-248">//        String ID = "$id";</span>
-<span class="source-line-no">249</span><span id="line-249">//        JsonMetaSchema overrideEmailValidatorMetaSchema = new JsonMetaSchema.Builder(URI)</span>
-<span class="source-line-no">250</span><span id="line-250">//            .idKeyword(ID)</span>
-<span class="source-line-no">251</span><span id="line-251">//            // Override EmailValidator</span>
-<span class="source-line-no">252</span><span id="line-252">//            .addFormat(new DateTimeFormat("email", "^[a-zA-Z0-9.!#$%&amp;'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"))</span>
-<span class="source-line-no">253</span><span id="line-253">//            .build();</span>
-<span class="source-line-no">254</span><span id="line-254">//</span>
-<span class="source-line-no">255</span><span id="line-255">//    return new JsonSchemaFactory.Builder().defaultMetaSchemaURI(overrideEmailValidatorMetaSchema.getUri())</span>
-<span class="source-line-no">256</span><span id="line-256">//            .addMetaSchema(overrideEmailValidatorMetaSchema)</span>
-<span class="source-line-no">257</span><span id="line-257">//            .build();</span>
-<span class="source-line-no">258</span><span id="line-258">//    }</span>
-<span class="source-line-no">259</span><span id="line-259">}</span>
+<span class="source-line-no">210</span><span id="line-210">        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);</span>
+<span class="source-line-no">211</span><span id="line-211">        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);</span>
+<span class="source-line-no">212</span><span id="line-212">        mapper.setSerializationInclusion(Include.NON_EMPTY);</span>
+<span class="source-line-no">213</span><span id="line-213">        SimpleModule module = new SimpleModule();</span>
+<span class="source-line-no">214</span><span id="line-214">        module.addDeserializer(OffsetDateTime.class, new JsonDeserializer&lt;OffsetDateTime&gt;() {</span>
+<span class="source-line-no">215</span><span id="line-215">            @Override</span>
+<span class="source-line-no">216</span><span id="line-216">            public OffsetDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {</span>
+<span class="source-line-no">217</span><span id="line-217">                String value = jsonParser.getText();</span>
+<span class="source-line-no">218</span><span id="line-218">                return Converter.parseDateTimeString(value);</span>
+<span class="source-line-no">219</span><span id="line-219">            }</span>
+<span class="source-line-no">220</span><span id="line-220">        });</span>
+<span class="source-line-no">221</span><span id="line-221">        mapper.registerModule(module);</span>
+<span class="source-line-no">222</span><span id="line-222">        reader = mapper.readerFor(Coordinate.class);</span>
+<span class="source-line-no">223</span><span id="line-223">        writer = mapper.writerFor(Coordinate.class);</span>
+<span class="source-line-no">224</span><span id="line-224">    }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">    private static ObjectReader getObjectReader() {</span>
+<span class="source-line-no">227</span><span id="line-227">        if (reader == null) {</span>
+<span class="source-line-no">228</span><span id="line-228">            instantiateMapper();</span>
+<span class="source-line-no">229</span><span id="line-229">        }</span>
+<span class="source-line-no">230</span><span id="line-230">        return reader;</span>
+<span class="source-line-no">231</span><span id="line-231">    }</span>
+<span class="source-line-no">232</span><span id="line-232"></span>
+<span class="source-line-no">233</span><span id="line-233">    private static ObjectWriter getObjectWriter() {</span>
+<span class="source-line-no">234</span><span id="line-234">        if (writer == null) {</span>
+<span class="source-line-no">235</span><span id="line-235">            instantiateMapper();</span>
+<span class="source-line-no">236</span><span id="line-236">        }</span>
+<span class="source-line-no">237</span><span id="line-237">        return writer;</span>
+<span class="source-line-no">238</span><span id="line-238">    }</span>
+<span class="source-line-no">239</span><span id="line-239"></span>
+<span class="source-line-no">240</span><span id="line-240">    private static JsonSchema defaultSchema() {</span>
+<span class="source-line-no">241</span><span id="line-241">        JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);</span>
+<span class="source-line-no">242</span><span id="line-242">        SchemaValidatorsConfig config = new SchemaValidatorsConfig();</span>
+<span class="source-line-no">243</span><span id="line-243">        config.setHandleNullableField(false);</span>
+<span class="source-line-no">244</span><span id="line-244">        return factory.getSchema(Converter.class.getResourceAsStream("/schema/mzqc_schema.json"), config);</span>
+<span class="source-line-no">245</span><span id="line-245">    }</span>
+<span class="source-line-no">246</span><span id="line-246"></span>
+<span class="source-line-no">247</span><span id="line-247">}</span>
 
 
 

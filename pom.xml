@@ -100,16 +100,6 @@
             <version>2.13.4</version>
         </dependency>
         <dependency>
-            <groupId>org.biojava</groupId>
-            <artifactId>biojava-core</artifactId>
-            <version>6.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.biojava</groupId>
-            <artifactId>biojava-ontology</artifactId>
-            <version>6.0.5</version>
-        </dependency>
-        <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>1.0.72</version>

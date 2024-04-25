@@ -2,7 +2,7 @@
 Nils Hoffmann <nils.hoffmann@cebitec.uni-bielefeld.de>
 :toc: macro
 
-image:https://img.shields.io/badge/lifecycle-experimental-orange.svg["Lifecycle: Experimental", link="https://github.com/lifs-tools/jmqzc"] image:https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg["CI", link="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"] image:https://img.shields.io/maven-central/v/org.lifs-tools/jmzqc[Maven Central] image:https://img.shields.io/github/release/MS-Quality-hub/jmzqc.svg["Latest Release", link="https://github.com/MS-Quality-hub/jmzqc/releases/latest"] image:https://zenodo.org/badge/DOI/10.5281/zenodo.7105813.svg["DOI", link="https://doi.org/10.5281/zenodo.7105813"] image:https://mybinder.org/badge_logo.svg["Open in MyBinder", link="https://mybinder.org/v2/gh/nilshoffmann/java-notebook/jmzqc?urlpath=/lab/workspaces/auto-g/tree/jmzqc-demo.ipynb"]
+image:https://img.shields.io/badge/lifecycle-stable-green.svg["Lifecycle: Stable", link="https://github.com/lifs-tools/jmqzc"] image:https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml/badge.svg["CI", link="https://github.com/MS-Quality-hub/jmzqc/actions/workflows/ci.yml"] image:https://img.shields.io/maven-central/v/org.lifs-tools/jmzqc[Maven Central] image:https://img.shields.io/github/release/MS-Quality-hub/jmzqc.svg["Latest Release", link="https://github.com/MS-Quality-hub/jmzqc/releases/latest"] image:https://zenodo.org/badge/DOI/10.5281/zenodo.7105813.svg["DOI", link="https://doi.org/10.5281/zenodo.7105813"] image:https://mybinder.org/badge_logo.svg["Open in MyBinder", link="https://mybinder.org/v2/gh/nilshoffmann/java-notebook/jmzqc?urlpath=/lab/workspaces/auto-g/tree/jmzqc_proteomics_demo.ipynb"]
 
 This project is a parser, validator and serializer implementation for https://github.com/HUPO-PSI/mzQC[mzQC: Reporting and exchange format for mass spectrometry quality control data].
 
@@ -144,6 +144,8 @@ Alternatively, you can redirect validation message output into a file:
 The file `jmzqc-out.tsv` will then contain the same output as the std out output above.
 
 == References
+
+//* **https://[] **
 
 //  * **https://pubs.acs.org/doi/10.1021/acs.analchem.8b04310[N. Hoffmann et al., Analytical Chemistry 2019; Jan;91(5):3302-3310.] https://pubs.acs.org/doi/pdf/10.1021/acs.analchem.8b04310[PDF File.] https://www.ncbi.nlm.nih.gov/pubmed/30688441[PubMed record].**
 

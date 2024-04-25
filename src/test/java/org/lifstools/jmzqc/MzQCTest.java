@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  */
 public class MzQCTest {
 
-    private final String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/draft_v1/examples/";
+    private final String baseUrl = "https://raw.githubusercontent.com/HUPO-PSI/mzQC/main/specification_documents/examples/";
 
     @Test
     public void testReadMetaboBatchesExample() throws IOException {
@@ -101,8 +101,8 @@ public class MzQCTest {
     }
 
     @Test
-    public void testReadSingleRunExample() throws IOException {
-        URL u = new URL(baseUrl + "individual-runs.mzQC");
+    public void testReadIntroRunExample() throws IOException {
+        URL u = new URL(baseUrl + "intro_run.mzQC");
         MzQC c = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());

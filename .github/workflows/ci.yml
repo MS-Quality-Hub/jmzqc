@@ -1,7 +1,10 @@
 name: CI 
 
 # ci workflow
-on: [push]
+on: 
+  push
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
     publish:

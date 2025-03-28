@@ -2,7 +2,7 @@ name: CI
 
 # ci workflow
 on: 
-  push
+  push:
   pull_request:
     types: [opened, reopened]
 

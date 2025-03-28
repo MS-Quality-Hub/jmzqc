@@ -53,7 +53,7 @@ public class MzQCTest {
 
     @Test
     public void testReadQC2SampleExample() throws IOException {
-        URL u = new URL(baseUrl + "QC2-sample-example.mzQC");
+        URL u = new URL(baseUrl + "intro_qc2.mzQC");
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
         MzQC d = Converter.of(u);
@@ -68,7 +68,7 @@ public class MzQCTest {
 
     @Test
     public void testWriteQC2SampleExample() throws IOException {
-        URL u = new URL(baseUrl + "QC2-sample-example.mzQC");
+        URL u = new URL(baseUrl + "intro_qc2.mzQC");
         MzQC d = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         assertTrue(messages.isEmpty());
@@ -76,7 +76,7 @@ public class MzQCTest {
         assertEquals(1, d.runQualities().size());
         assertEquals(0, d.setQualities().size());
         assertEquals(1, d.controlledVocabularies().size());
-        File testFile = File.createTempFile("QC2-sample-example", ".mzQC");
+        File testFile = File.createTempFile("intro_qc2.mzQC", ".mzQC");
         File writtenFile = Converter.toJsonFile(d, testFile);
         Set<ValidationMessage> messages2 = Converter.validate(writtenFile);
         assertTrue(messages2.isEmpty());
@@ -88,7 +88,7 @@ public class MzQCTest {
 
     @Test
     public void testReadMultiRunExample() throws IOException {
-        URL u = new URL(baseUrl + "set-of-runs.mzQC");
+        URL u = new URL(baseUrl + "intro_set.mzQC");
         MzQC c = Converter.of(u);
         Set<ValidationMessage> messages = Converter.validate(u);
         System.out.println(messages);
@@ -96,8 +96,8 @@ public class MzQCTest {
         assertNotNull(c);
         assertEquals(0, c.runQualities().size());
         assertEquals(3, c.setQualities().size());
-        assertEquals(4, c.setQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(2, c.controlledVocabularies().size());
+        assertEquals(3, c.setQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
+        assertEquals(1, c.controlledVocabularies().size());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class MzQCTest {
         assertNotNull(c);
         assertEquals(1, c.runQualities().size());
         assertEquals(5, c.runQualities().stream().map(BaseQuality::qualityMetrics).filter((qm) -> qm != null).mapToInt(List::size).sum());
-        assertEquals(1, c.controlledVocabularies().size());
+        assertEquals(2, c.controlledVocabularies().size());
     }
 
     @Test

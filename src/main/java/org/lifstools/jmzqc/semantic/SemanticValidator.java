@@ -6,6 +6,7 @@ import org.lifstools.jmzqc.Unit;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,21 @@ public class SemanticValidator {
         this.oboParser = new OboParser();
         this.validationErrors = new ArrayList<>();
     }
+    
+    
+    /**
+     * Loads the OBO ontology from a stream for validation.
+     *
+     * @param oboReader The OBO reader to load from
+     * @throws IOException if there's an error reading the file
+     */
+    public void loadOntology(Reader oboReader) throws IOException {
+        try {
+            oboParser.loadOboFile(oboReader);
+        } catch (IOException e) {
+            validationErrors.add("Failed to load OBO file: " + e.getMessage());
+        }
+    }
 
     /**
      * Loads the OBO ontology file for validation.
@@ -30,7 +46,7 @@ public class SemanticValidator {
     public void loadOntology(File oboFile) throws IOException {
         try {
             oboParser.loadOboFile(oboFile);
-        } catch (Exception e) {
+        } catch (IOException e) {
             validationErrors.add("Failed to load OBO file: " + e.getMessage());
         }
     }

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -25,14 +26,8 @@ public class OboParser {
         this.termRelationships = new HashMap<>();
     }
 
-    /**
-     * Loads and parses an OBO file.
-     *
-     * @param oboFile The OBO file to parse
-     * @throws IOException if there's an error reading the file
-     */
-    public void loadOboFile(File oboFile) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(oboFile))) {
+    public void loadOboFile(Reader oboReader) throws IOException {
+        try (BufferedReader reader = new BufferedReader(oboReader)) {
             String line;
             String currentTermId = null;
             StringBuilder currentDef = new StringBuilder();
@@ -77,6 +72,18 @@ public class OboParser {
             if (currentTermId != null && currentDef.length() > 0) {
                 termDefinitions.put(currentTermId, currentDef.toString().trim());
             }
+        }
+    }
+    
+    /**
+     * Loads and parses an OBO file.
+     *
+     * @param oboFile The OBO file to parse
+     * @throws IOException if there's an error reading the file
+     */
+    public void loadOboFile(File oboFile) throws IOException {
+        try (FileReader fileReader = new FileReader(oboFile)) {
+            loadOboFile(fileReader);
         }
     }
 
